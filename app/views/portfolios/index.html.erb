@@ -1,0 +1,25 @@
+<h2>Portfolio Project: <%= params[:id] %></h2>
+
+<% content_for :header_tags do %>
+	<script src="/plugin_assets/charting/vis/dist/vis.js"></script>
+	<link href="/plugin_assets/charting/vis/dist/vis.css" rel="stylesheet" type="text/css" />
+<% end %>
+ 
+<div id="visualization"></div>
+  <script type="text/javascript">
+    
+	var container = document.getElementById('visualization');
+    
+	var items = new vis.DataSet([
+  	  <% @issues.each do |issue| %>
+  	    {content: '<%= issue.project %> , <%= issue.subject %> ', 
+  	    start: '<%= issue.start_date.year %>-<%= issue.start_date.mon %>-<%= issue.start_date.mday %>',
+  	    end: '<%= issue.due_date.year %>-<%= issue.due_date.mon %>-<%= issue.due_date.mday %>'},
+  	  <% end %>
+    ]);
+    
+    var options = {};
+    var timeline = new vis.Timeline(container, items, options);
+    
+  </script>
+</html>
