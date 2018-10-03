@@ -1,3 +1,22 @@
 = portfolio_timeline
 
-Description goes here
+= Description
+V 0.1.1
+Remine plugin for portfolio management.
+Uses vis.js  (http://visjs.org/) libraries to display a timeline of issues alongside some useful data
+
+= Installation notes
+
+- Copy or clone repository to /plugins/ of your redmine installation
+- In Redmine root: cmd line -> rake redmine:plugins:assets
+- In Redmine you´ll need 2 custom fields of type 'date' added to all issues you want displayed.
+  · name = Fecha inicio planificada
+  · name = Fecha fin planificada
+  pd. spanish for 'Planned starting date' and 'Planned due date'
+  Make this fields available to all projects and type of issues desired. 
+- In project configuration->modules set Portfolio on to activate a new project tab labeled "Portfolio"
+
+= Compatibility
+
+- Developed for Redmine 3.2.0
+- Tested also under Redmine 3.4.6
