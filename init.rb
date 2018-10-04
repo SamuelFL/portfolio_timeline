@@ -1,8 +1,8 @@
 Redmine::Plugin.register :portfolio_timeline do
   name 'Portfolio Timeline plugin'
   author 'SamuelFL'
-  description 'This plugin implements a view for issues as a timeline'
-  version '0.1.1'
+  description 'Redmine plugin for portfolio management'
+  version '0.1.2'
   project_module :portfolios do
     permission :view_portfolios, :portfolios => :index
   end
