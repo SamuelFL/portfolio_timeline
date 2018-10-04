@@ -1,0 +1,24 @@
+  .vis-time-axis .vis-grid.vis-january,
+  .vis-time-axis .vis-grid.vis-february,
+  .vis-time-axis .vis-grid.vis-march
+  {
+    background: #e5deda;
+  }
+  .vis-time-axis .vis-grid.vis-april,
+  .vis-time-axis .vis-grid.vis-may,
+  .vis-time-axis .vis-grid.vis-june
+  {
+    background: #fff7f2;
+  }
+  .vis-time-axis .vis-grid.vis-july,
+  .vis-time-axis .vis-grid.vis-august,
+  .vis-time-axis .vis-grid.vis-september
+  {
+    background: #dbdae5;
+  }
+  .vis-time-axis .vis-grid.vis-october,
+  .vis-time-axis .vis-grid.vis-november,
+  .vis-time-axis .vis-grid.vis-december
+  {
+    background: #f4f2ff;
+  }
