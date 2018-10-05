@@ -1,7 +1,7 @@
 = portfolio_timeline
 
 = Description
-V 0.1.2
+V 0.1.4
 Remine plugin for portfolio management.
 Uses vis.js  (http://visjs.org/) libraries to display a timeline of issues alongside some milestones attached as custom fields
 

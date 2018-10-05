@@ -9,23 +9,29 @@
   <script type="text/javascript">
     
 	var container = document.getElementById('visualization');
-    
-	var items = new vis.DataSet([
+    var groups = new vis.DataSet();
+	
+	var items = new vis.DataSet();
   	  <% @issues.each do |issue| %>
-  	    {content: '<%= issue.subject %>', 
+	    groups.add({id: <%= issue.id %>, content: '<%= issue.subject %>'});
+  	    var issueData = {content: '<%= issue.subject %>', 
+		group: '<%= issue.id %>',
   	    start: '<%= issue.custom_field_value(@plannedStartDateID) %>',
-  	    end: '<%= issue.custom_field_value(@plannedDueDateID) %>'},
+  	    end: '<%= issue.custom_field_value(@plannedDueDateID) %>'};
+		items.add(issueData);
 		<% @hitos = issue.custom_field_value(@hitosFieldID).split("/") %>
 		<% @hitos.each do |hito| %>
-			{start: '<%= hito.split("-")[0].squish %>-<%= hito.split("-")[1] %>-<%= hito.split("-")[2] %>',
+			var hitoData = {start: '<%= hito.split("-")[0].squish %>-<%= hito.split("-")[1] %>-<%= hito.split("-")[2] %>',
 			content: '<%= hito.split("-")[3].squish %>',
-			type: 'point'},
+			group: '<%= issue.id %>',
+			type: 'point'};
+			items.add(hitoData);
 		<% end %>
   	  <% end %>
-    ]);
-    
-    var options = {};
+    var options = {
+	  groupOrder: 'content'
+	};
     var timeline = new vis.Timeline(container, items, options);
-    
+    timeline.setGroups(groups);
   </script>
 </html>
