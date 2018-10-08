@@ -20,7 +20,7 @@
   	    end: '<%= issue.custom_field_value(@plannedDueDateID) %>'};
 		items.add(issueData);
 		<% @hitos = issue.custom_field_value(@hitosFieldID).split("/") %>
-		<% @hitos.each do |hito| %>
+		<% @hitos.take_while{ |hito| !hito.blank? }.each do |hito| %>
 			var hitoData = {start: '<%= hito.split("-")[0].squish %>-<%= hito.split("-")[1] %>-<%= hito.split("-")[2] %>',
 			content: '<%= hito.split("-")[3].squish %>',
 			group: '<%= issue.id %>',
