@@ -1,5 +1,6 @@
 = portfolio_timeline
 
+Developed by SamuelFL at Inerza S.A. (inerza.com)
 = Description
 V 0.1.4
 Remine plugin for portfolio management.
