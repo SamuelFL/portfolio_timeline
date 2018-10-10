@@ -1,24 +1,36 @@
   .vis-time-axis .vis-grid.vis-january,
   .vis-time-axis .vis-grid.vis-february,
-  .vis-time-axis .vis-grid.vis-march
+  .vis-time-axis .vis-grid.vis-march,
+  .vis-time-axis .vis-grid.vis-april
   {
     background: #e5deda;
   }
-  .vis-time-axis .vis-grid.vis-april,
   .vis-time-axis .vis-grid.vis-may,
-  .vis-time-axis .vis-grid.vis-june
+  .vis-time-axis .vis-grid.vis-june,
+  .vis-time-axis .vis-grid.vis-july,
+  .vis-time-axis .vis-grid.vis-august
   {
     background: #fff7f2;
   }
-  .vis-time-axis .vis-grid.vis-july,
-  .vis-time-axis .vis-grid.vis-august,
-  .vis-time-axis .vis-grid.vis-september
-  {
-    background: #dbdae5;
-  }
+  .vis-time-axis .vis-grid.vis-september,
   .vis-time-axis .vis-grid.vis-october,
   .vis-time-axis .vis-grid.vis-november,
   .vis-time-axis .vis-grid.vis-december
   {
-    background: #f4f2ff;
+    background: #dbdae5;
+  }
+  .vis-item.vis-point {
+  background: none;
+  }
+  .vis-item.vis-dot {
+     width: 8px; 
+     height: 8px; 
+     border: none;
+     border-radius: 0px;
+     background:#ff9966;
+     -webkit-transform: rotate(45deg);
+     -moz-transform: rotate(45deg);
+     -ms-transform: rotate(45deg);
+     -o-transform: rotate(45deg);
+     transform: rotate(45deg);
   }

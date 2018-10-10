@@ -13,9 +13,15 @@
 	
 	var items = new vis.DataSet();
   	  <% @issues.each do |issue| %>
-	    groups.add({id: <%= issue.id %>, content: '<%= issue.subject %>'});
-  	    var issueData = {content: '<%= issue.subject %>', 
+	    groups.add({id: <%= issue.id %>,  
+		            content: '<%= issue.subject %>', 
+					subgroupOrder: function (a,b) {return a.subgroupOrder - b.subgroupOrder;},
+					subgroupStack: {'<%= issue.id %>-line': true, '<%= issue.id %>-hitos': true}
+					});
+  	    var issueData = { 
 		group: '<%= issue.id %>',
+		subgroup:'<%= issue.id %>-line',
+		subgroupOrder:1,
   	    start: '<%= issue.custom_field_value(@plannedStartDateID) %>',
   	    end: '<%= issue.custom_field_value(@plannedDueDateID) %>'};
 		items.add(issueData);
@@ -24,12 +30,15 @@
 			var hitoData = {start: '<%= hito.split("-")[0].squish %>-<%= hito.split("-")[1] %>-<%= hito.split("-")[2] %>',
 			content: '<%= hito.split("-")[3].squish %>',
 			group: '<%= issue.id %>',
+			subgroup: '<%= issue.id %>-hitos',
+			subgroupOrder:2,
 			type: 'point'};
 			items.add(hitoData);
 		<% end %>
   	  <% end %>
     var options = {
-	  groupOrder: 'content'
+	  orientation: 'top',
+	  groupOrder: 'id'
 	};
     var timeline = new vis.Timeline(container, items, options);
     timeline.setGroups(groups);
