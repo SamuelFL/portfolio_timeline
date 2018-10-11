@@ -3,24 +3,26 @@
   .vis-time-axis .vis-grid.vis-march,
   .vis-time-axis .vis-grid.vis-april
   {
-    background: #e5deda;
+    background: #a3b8cc;
   }
   .vis-time-axis .vis-grid.vis-may,
   .vis-time-axis .vis-grid.vis-june,
   .vis-time-axis .vis-grid.vis-july,
   .vis-time-axis .vis-grid.vis-august
   {
-    background: #fff7f2;
+    background: #d8ecff;
   }
   .vis-time-axis .vis-grid.vis-september,
   .vis-time-axis .vis-grid.vis-october,
   .vis-time-axis .vis-grid.vis-november,
   .vis-time-axis .vis-grid.vis-december
   {
-    background: #dbdae5;
+    background: #c3d4e5;
   }
-  .vis-item.vis-point {
-  background: none;
+  .vis-item.vis-range
+  {
+    border-color: #ffadc4;
+    background: #e59cb0;
   }
   .vis-item.vis-dot {
      width: 8px; 
