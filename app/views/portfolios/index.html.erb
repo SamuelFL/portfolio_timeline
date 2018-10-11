@@ -4,7 +4,6 @@
 	<link href="/plugin_assets/portfolio_timeline/vis/dist/vis.css" rel="stylesheet" type="text/css" />
 	<%= stylesheet_link_tag 'plugin_style', :plugin => 'portfolio_timeline' %>
 <% end %>
- 
 <div id="visualization"></div>
   <script type="text/javascript">
     
@@ -22,6 +21,7 @@
 		group: '<%= issue.id %>',
 		subgroup:'<%= issue.id %>-line',
 		subgroupOrder:1,
+		visibleFrameTemplate: '<div class="progress-wrapper"><div class="progress" style="width:<%= issue.done_ratio %>%"></div><label class="progress-label"><%= issue.done_ratio %>%<label></div>',
   	    start: '<%= issue.custom_field_value(@plannedStartDateID) %>',
   	    end: '<%= issue.custom_field_value(@plannedDueDateID) %>'};
 		items.add(issueData);
@@ -40,7 +40,12 @@
   	  <% end %>
     var options = {
 	  orientation: 'top',
-	  groupOrder: 'id'
+	  groupOrder: 'id',
+	  visibleFrameTemplate: function(item) {
+        if (item.visibleFrameTemplate) {
+          return item.visibleFrameTemplate;
+        }
+    }
 	};
     var timeline = new vis.Timeline(container, items, options);
     timeline.setGroups(groups);

@@ -19,6 +19,8 @@
   {
     background: #c3d4e5;
   }
+  
+  
   .vis-item.vis-range
   {
     border-color: #ffadc4;
@@ -36,3 +38,26 @@
      -o-transform: rotate(45deg);
      transform: rotate(45deg);
   }
+  
+  .progress-wrapper {
+     background: white;
+     width: 100%;
+     height: 18px;
+     text-align: center;
+     position: relative;
+     overflow: hidden;
+   }
+  
+   .progress {
+     height: 100%;
+     width: 60%;
+     position: absolute;
+     left: 0px;
+     top: 0px;
+     background: #63eda0;
+   }
+  
+   .progress-label {
+     position: absolute;
+     z-index: 1;
+   }
