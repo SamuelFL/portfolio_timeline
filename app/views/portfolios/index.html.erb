@@ -25,15 +25,17 @@
   	    start: '<%= issue.custom_field_value(@plannedStartDateID) %>',
   	    end: '<%= issue.custom_field_value(@plannedDueDateID) %>'};
 		items.add(issueData);
-		<% @hitos = issue.custom_field_value(@hitosFieldID).split("/") %>
-		<% @hitos.take_while{ |hito| !hito.blank? }.each do |hito| %>
-			var hitoData = {start: '<%= hito.split("-")[0].squish %>-<%= hito.split("-")[1] %>-<%= hito.split("-")[2] %>',
-			content: '<%= hito.split("-")[3].squish %>',
-			group: '<%= issue.id %>',
-			subgroup: '<%= issue.id %>-hitos',
-			subgroupOrder:2,
-			type: 'point'};
+		<% @hitos = issue.custom_field_value(@hitosFieldID).split(/(\[\d{4}-\d{1,2}-\d{1,2}\|.*\])/) %>
+		<% @hitos.each do |hito| %>
+		  <% if !hito.blank? %>
+			var hitoData = {start: '<%= hito.split(/\[(\d{4})\-(\d{1,2})\-(\d{1,2})\|(.*)\]/)[1] %>-<%= hito.split(/\[(\d{4})\-(\d{1,2})\-(\d{1,2})\|(.*)\]/)[2] %>-<%= hito.split(/\[(\d{4})\-(\d{1,2})\-(\d{1,2})\|(.*)\]/)[3] %>',
+			                content: '<%= hito.split(/\[(\d{4})\-(\d{1,2})\-(\d{1,2})\|(.*)\]/)[4] %>',
+			                group: '<%= issue.id %>',
+			                subgroup: '<%= issue.id %>-hitos',
+			                subgroupOrder:2,
+			                type: 'point'};
 			items.add(hitoData);
+		  <% end %>
 		<% end %>
   	  <% end %>
     var options = {
