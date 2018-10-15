@@ -1,43 +1,53 @@
-<h2>Portfolio Project: <%= params[:id] %></h2>
+<h2>Portfolio <%= @projectName %></h2>
 <% content_for :header_tags do %>
 	<script src="/plugin_assets/portfolio_timeline/vis/dist/vis.js"></script>
 	<link href="/plugin_assets/portfolio_timeline/vis/dist/vis.css" rel="stylesheet" type="text/css" />
 	<%= stylesheet_link_tag 'plugin_style', :plugin => 'portfolio_timeline' %>
+	<%= javascript_include_tag 'plugin', :plugin => 'portfolio_timeline' %>
 <% end %>
+
+<p>
+  <h2>Opciones de visualización</h2>
+  <input type="checkbox" onclick="updateHitos()" id="hitosCheckbox">Hitos
+  <input type="checkbox" onclick="updateProgressBar()" id="progressBarCheckbox">Indicador de progreso
+</p>
+
 <div id="visualization"></div>
-  <script type="text/javascript">
+<script type="text/javascript">
     
-	var container = document.getElementById('visualization');
-    var groups = new vis.DataSet();
+  var container = document.getElementById('visualization');
+  var groups = new vis.DataSet();
 	
-	var items = new vis.DataSet();
-  	  <% @issues.each do |issue| %>
-	    groups.add({id: <%= issue.id %>,  
-		            content: '<%= issue.subject %>', 
-					subgroupOrder: function (a,b) {return a.subgroupOrder - b.subgroupOrder;},
-					subgroupStack: {'<%= issue.id %>-line': true, '<%= issue.id %>-hitos': true}
-					});
-  	    var issueData = { 
-		group: '<%= issue.id %>',
-		subgroup:'<%= issue.id %>-line',
-		subgroupOrder:1,
-		visibleFrameTemplate: '<div class="progress-wrapper"><div class="progress" style="width:<%= issue.done_ratio %>%"></div><label class="progress-label"><%= issue.done_ratio %>%<label></div>',
-  	    start: '<%= issue.custom_field_value(@plannedStartDateID) %>',
-  	    end: '<%= issue.custom_field_value(@plannedDueDateID) %>'};
-		items.add(issueData);
-		<% @hitos = issue.custom_field_value(@hitosFieldID).split(/(\[\d{4}-\d{1,2}-\d{1,2}\|.*\])/) %>
-		<% @hitos.each do |hito| %>
-		  <% if !hito.blank? %>
-			var hitoData = {start: '<%= hito.split(/\[(\d{4})\-(\d{1,2})\-(\d{1,2})\|(.*)\]/)[1] %>-<%= hito.split(/\[(\d{4})\-(\d{1,2})\-(\d{1,2})\|(.*)\]/)[2] %>-<%= hito.split(/\[(\d{4})\-(\d{1,2})\-(\d{1,2})\|(.*)\]/)[3] %>',
-			                content: '<%= hito.split(/\[(\d{4})\-(\d{1,2})\-(\d{1,2})\|(.*)\]/)[4] %>',
-			                group: '<%= issue.id %>',
-			                subgroup: '<%= issue.id %>-hitos',
-			                subgroupOrder:2,
-			                type: 'point'};
-			items.add(hitoData);
-		  <% end %>
-		<% end %>
-  	  <% end %>
+  var items = new vis.DataSet();
+    <% @issues.each do |issue| %>
+	  groups.add({id: <%= issue.id %>,  
+		          content: '<%= issue.subject %>', 
+				  subgroupOrder: function (a,b) {return a.subgroupOrder - b.subgroupOrder;},
+				  subgroupStack: {'<%= issue.id %>-line': true, '<%= issue.id %>-hitos': true}
+					});			
+	  var issueData = { 
+	  group: '<%= issue.id %>',
+	  subgroup:'<%= issue.id %>-line',
+	  subgroupOrder:1,
+	  visibleFrameTemplate: '<div class="progress-wrapper"><div class="progress" style="width:<%= issue.done_ratio %>%"></div><label class="progress-label"><%= issue.done_ratio %>%<label></div>',
+  	  start: '<%= issue.custom_field_value(@plannedStartDateID) %>',
+  	  end: '<%= issue.custom_field_value(@plannedDueDateID) %>'};
+	  items.add(issueData);
+	  <% @hitos = issue.custom_field_value(@hitosFieldID).split(/(\[\d{4}-\d{1,2}-\d{1,2}\|.*\])/) %>
+	  <% @hitos.each do |hito| %>
+	    <% if !hito.blank? %>
+	      <% hitoItems= hito.split(/\[(\d{4})\-(\d{1,2})\-(\d{1,2})\|(.*)\]/) %> 
+		  var hitoData = {start: '<%= hitoItems[1] %>-<%= hitoItems[2] %>-<%= hitoItems[3] %>',
+			              content: '<%= hitoItems[4] %>',
+			              group: '<%= issue.id %>',
+			              subgroup: '<%= issue.id %>-hitos',
+			              subgroupOrder:2,
+			              type: 'point'};
+		  items.add(hitoData);
+	    <% end %>
+	  <% end %>
+  	<% end %>
+	  
     var options = {
 	  orientation: 'top',
 	  groupOrder: 'id',
@@ -45,8 +55,9 @@
         if (item.visibleFrameTemplate) {
           return item.visibleFrameTemplate;
         }
-    }
+      }
 	};
+	
     var timeline = new vis.Timeline(container, items, options);
     timeline.setGroups(groups);
   </script>

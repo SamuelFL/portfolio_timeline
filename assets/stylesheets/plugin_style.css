@@ -20,7 +20,10 @@
     background: #c3d4e5;
   }
   
-  
+  .vis-point
+  {
+	display: none;
+  }
   .vis-item.vis-range
   {
     border-color: #ffadc4;
@@ -40,6 +43,7 @@
   }
   
   .progress-wrapper {
+	 display: none;
      background: white;
      width: 100%;
      height: 18px;
