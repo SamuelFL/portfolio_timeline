@@ -21,7 +21,7 @@
   var items = new vis.DataSet();
     <% @issues.each do |issue| %>
 	  groups.add({id: <%= issue.id %>,  
-		          content: '<%= issue.subject %>', 
+		          content: '<%= issue.subject %><br><button onclick="moveWindow(<%= "'" + issue.custom_field_value(@plannedStartDateID) + "'" %>, <%= "'" + issue.custom_field_value(@plannedDueDateID) + "'" %>)">Ir a inicio</button>', 
 				  subgroupOrder: function (a,b) {return a.subgroupOrder - b.subgroupOrder;},
 				  subgroupStack: {'<%= issue.id %>-line': true, '<%= issue.id %>-hitos': true}
 					});			
@@ -29,6 +29,7 @@
 	  group: '<%= issue.id %>',
 	  subgroup:'<%= issue.id %>-line',
 	  subgroupOrder:1,
+	  title:'Fecha inicio planificada: <%= issue.custom_field_value(@plannedStartDateID) %><br>Fecha fin planificada: <%= issue.custom_field_value(@plannedDueDateID) %>',
 	  visibleFrameTemplate: '<div class="progress-wrapper"><div class="progress" style="width:<%= issue.done_ratio %>%"></div><label class="progress-label"><%= issue.done_ratio %>%<label></div>',
   	  start: '<%= issue.custom_field_value(@plannedStartDateID) %>',
   	  end: '<%= issue.custom_field_value(@plannedDueDateID) %>'};
@@ -42,6 +43,7 @@
 			              group: '<%= issue.id %>',
 			              subgroup: '<%= issue.id %>-hitos',
 			              subgroupOrder:2,
+						  title: 'Fecha: <%= hitoItems[1] %>-<%= hitoItems[2] %>-<%= hitoItems[3] %>',
 			              type: 'point'};
 		  items.add(hitoData);
 	    <% end %>

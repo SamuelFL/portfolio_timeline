@@ -43,3 +43,11 @@ function showProgressBar(progressBarArray){
     progressBarArray[i].style.display='inline-block';
   }
 };
+
+
+function moveWindow(start, end){
+	timeline.setWindow({
+            start: start,
+            end:   end
+        });
+}
