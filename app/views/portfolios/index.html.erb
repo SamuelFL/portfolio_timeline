@@ -1,9 +1,12 @@
 <h2>Portfolio <%= @projectName %></h2>
 <% content_for :header_tags do %>
+	
+	<%= javascript_include_tag 'moment-with-locales', :plugin => 'portfolio_timeline' %>
 	<script src="/plugin_assets/portfolio_timeline/vis/dist/vis.js"></script>
 	<link href="/plugin_assets/portfolio_timeline/vis/dist/vis.css" rel="stylesheet" type="text/css" />
 	<%= stylesheet_link_tag 'plugin_style', :plugin => 'portfolio_timeline' %>
 	<%= javascript_include_tag 'plugin', :plugin => 'portfolio_timeline' %>
+	
 <% end %>
 
 <p>
@@ -20,8 +23,10 @@
 	
   var items = new vis.DataSet();
     <% @issues.each do |issue| %>
+	<% @start = issue.custom_field_value(@startDateID) %>
+	<% @end = issue.custom_field_value(@dueDateID) %>
 	  groups.add({id: <%= issue.id %>,  
-		          content: '<%= issue.subject %><br><button onclick="moveWindow(<%= "'" + issue.custom_field_value(@plannedStartDateID) + "'" %>, <%= "'" + issue.custom_field_value(@plannedDueDateID) + "'" %>)">Ir a inicio</button>', 
+		          content: '<%= issue.subject %><br><button onclick="moveWindow(<%= "'" + @start + "'" %>, <%= "'" + @end + "'" %>)">Ir a inicio</button>', 
 				  subgroupOrder: function (a,b) {return a.subgroupOrder - b.subgroupOrder;},
 				  subgroupStack: {'<%= issue.id %>-line': true, '<%= issue.id %>-hitos': true}
 					});			
@@ -29,21 +34,21 @@
 	  group: '<%= issue.id %>',
 	  subgroup:'<%= issue.id %>-line',
 	  subgroupOrder:1,
-	  title:'Fecha inicio planificada: <%= issue.custom_field_value(@plannedStartDateID) %><br>Fecha fin planificada: <%= issue.custom_field_value(@plannedDueDateID) %>',
+	  title:'Fecha inicio planificada: <%= @start %><br>Fecha fin planificada: <%= @end %>',
 	  visibleFrameTemplate: '<div class="progress-wrapper"><div class="progress" style="width:<%= issue.done_ratio %>%"></div><label class="progress-label"><%= issue.done_ratio %>%<label></div>',
-  	  start: '<%= issue.custom_field_value(@plannedStartDateID) %>',
-  	  end: '<%= issue.custom_field_value(@plannedDueDateID) %>'};
+  	  start: '<%= @start %>',
+  	  end: '<%= @end %>'};
 	  items.add(issueData);
 	  <% @hitos = issue.custom_field_value(@hitosFieldID).split(/(\[\d{4}-\d{1,2}-\d{1,2}\|.*\])/) %>
 	  <% @hitos.each do |hito| %>
 	    <% if !hito.blank? %>
-	      <% hitoItems= hito.split(/\[(\d{4})\-(\d{1,2})\-(\d{1,2})\|(.*)\]/) %> 
-		  var hitoData = {start: '<%= hitoItems[1] %>-<%= hitoItems[2] %>-<%= hitoItems[3] %>',
-			              content: '<%= hitoItems[4] %>',
+	      <% hitoSplitted= hito.split(/\[(\d{4})\-(\d{1,2})\-(\d{1,2})\|(.*)\]/) %> 
+		  var hitoData = {start: '<%= hitoSplitted[1] %>-<%= hitoSplitted[2] %>-<%= hitoSplitted[3] %>',
+			              content: '<%= hitoSplitted[4] %>',
 			              group: '<%= issue.id %>',
 			              subgroup: '<%= issue.id %>-hitos',
 			              subgroupOrder:2,
-						  title: 'Fecha: <%= hitoItems[1] %>-<%= hitoItems[2] %>-<%= hitoItems[3] %>',
+						  title: 'Fecha: <%= hitoSplitted[1] %>-<%= hitoSplitted[2] %>-<%= hitoSplitted[3] %>',
 			              type: 'point'};
 		  items.add(hitoData);
 	    <% end %>
@@ -51,6 +56,7 @@
   	<% end %>
 	  
     var options = {
+	  locale:'es',
 	  orientation: 'top',
 	  groupOrder: 'id',
 	  visibleFrameTemplate: function(item) {
