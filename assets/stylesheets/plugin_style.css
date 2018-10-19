@@ -29,39 +29,42 @@
     border-color: #ffadc4;
     background: #e59cb0;
   }
-  .vis-item.vis-dot {
-     width: 8px; 
-     height: 8px; 
-     border: none;
-     border-radius: 0px;
-     background:#ff9966;
-     -webkit-transform: rotate(45deg);
-     -moz-transform: rotate(45deg);
-     -ms-transform: rotate(45deg);
-     -o-transform: rotate(45deg);
-     transform: rotate(45deg);
+  .vis-item.vis-dot 
+  {
+    width: 8px; 
+    height: 8px; 
+    border: none;
+    border-radius: 0px;
+    background:#ff9966;
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    transform: rotate(45deg);
   }
   
-  .progress-wrapper {
-	 display: none;
-     background: white;
-     width: 100%;
-     height: 18px;
-     text-align: center;
-     position: relative;
-     overflow: hidden;
-   }
+  .progress-wrapper 
+  {
+	display: none;
+    background: white;
+    width: 100%;
+    height: 18px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .progress 
+  {
+    height: 100%;
+    width: 60%;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    background: #63eda0;
+  }
+  .progress-label
+  {
+    position: absolute;
+    z-index: 1;
+  }
   
-   .progress {
-     height: 100%;
-     width: 60%;
-     position: absolute;
-     left: 0px;
-     top: 0px;
-     background: #63eda0;
-   }
-  
-   .progress-label {
-     position: absolute;
-     z-index: 1;
-   }

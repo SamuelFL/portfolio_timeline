@@ -26,7 +26,7 @@
 	<% @start = issue.custom_field_value(@startDateID) %>
 	<% @end = issue.custom_field_value(@dueDateID) %>
 	  groups.add({id: <%= issue.id %>,  
-		          content: '<%= issue.subject %><br><button onclick="moveWindow(<%= "'" + @start + "'" %>, <%= "'" + @end + "'" %>)">Ir a inicio</button>', 
+		          content: '<%= issue.subject %><br><button onclick="moveWindow(<%= @start.split(/(\d{4})\-(\d{1,2})\-(\d{1,2})/) %>)">Ir a inicio</button>', 
 				  subgroupOrder: function (a,b) {return a.subgroupOrder - b.subgroupOrder;},
 				  subgroupStack: {'<%= issue.id %>-line': true, '<%= issue.id %>-hitos': true}
 					});			

@@ -44,10 +44,13 @@ function showProgressBar(progressBarArray){
   }
 };
 
-
-function moveWindow(start, end){
+function moveWindow(startArray){
+	var range = timeline.getWindow();
+    var interval = range.end - range.start;
+	var startDate = new Date(startArray[1],startArray[2]-1,startArray[3]);
+	var endDate = moment(startDate).add(interval,'milliseconds')
 	timeline.setWindow({
-            start: start,
-            end:   end
+            start: startDate,
+            end:  endDate
         });
 }
