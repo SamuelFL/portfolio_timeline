@@ -89,6 +89,7 @@
   }
   .paddedTd
   {
+	max-width: 250px;
     flex: auto;
 	padding: 0 15px;
   }
@@ -107,9 +108,9 @@
   /*Navigation button*/
   .iconButton
   {
-	max-height:15px;
-	max-width:15px;
-	margin-top:3px;
+	max-height:12px;
+	max-width:12px;
+	margin-top:4px;
   }
   .styledButton
   {
