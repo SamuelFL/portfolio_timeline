@@ -17,7 +17,7 @@
 
 <div id="visualization"></div>
 <script type="text/javascript">
-    
+ 
   var container = document.getElementById('visualization');
   var groups = new vis.DataSet();
 	
@@ -26,9 +26,10 @@
 	<% @start = issue.custom_field_value(@startDateID) %>
 	<% @end = issue.custom_field_value(@dueDateID) %>
 	  groups.add({id: <%= issue.id %>,  
-		          content: '<%= issue.subject %><br><button onclick="moveWindow(<%= @start.split(/(\d{4})\-(\d{1,2})\-(\d{1,2})/) %>)">Ir a inicio</button>', 
+		          content: '<button class="styledButton" onclick="moveWindow(<%= @start.split(/(\d{4})\-(\d{1,2})\-(\d{1,2})/) %>)"><img class=iconButton src="/plugin_assets/portfolio_timeline/images/beginnginIcon.svg"></img></button>  <%= issue.subject %>', 
 				  subgroupOrder: function (a,b) {return a.subgroupOrder - b.subgroupOrder;},
-				  subgroupStack: {'<%= issue.id %>-line': true, '<%= issue.id %>-hitos': true}
+				  subgroupStack: {'<%= issue.id %>-line': true, '<%= issue.id %>-hitos': true},
+				  extraColumns: ['<%= issue.status %>']
 					});			
 	  var issueData = { 
 	  group: '<%= issue.id %>',
@@ -63,10 +64,18 @@
         if (item.visibleFrameTemplate) {
           return item.visibleFrameTemplate;
         }
-      }
+      },
+	  groupTemplate: 	function(item) {
+			var tableContent = '<div class="pseudoTable"><div class="paddedTd">'+item.content+'</div><div class="paddedTd">'+item.extraColumns[0]+'</div></div>';
+			return tableContent;
+		}
 	};
 	
     var timeline = new vis.Timeline(container, items, options);
     timeline.setGroups(groups);
+	var width = document.getElementsByClassName('vis-labelset')[0].offsetWidth;
+	var layer = '<div id="pseudoTableHeaders"><div class="pseudoTable"><div class="paddedTd">Nombre</div><div class="paddedTd">Estado</div></div>';
+	$('.vis-timeline').first().prepend(layer);
+	$('#pseudoTableHeaders').width(width);
   </script>
 </html>

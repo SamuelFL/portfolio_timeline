@@ -1,3 +1,4 @@
+/*Background Colors*/
   .vis-time-axis .vis-grid.vis-january,
   .vis-time-axis .vis-grid.vis-february,
   .vis-time-axis .vis-grid.vis-march,
@@ -19,7 +20,7 @@
   {
     background: #c3d4e5;
   }
-  
+  /*Milestones*/
   .vis-point
   {
 	display: none;
@@ -42,7 +43,7 @@
     -o-transform: rotate(45deg);
     transform: rotate(45deg);
   }
-  
+  /*Progress Bars*/
   .progress-wrapper 
   {
 	display: none;
@@ -66,5 +67,61 @@
   {
     position: absolute;
     z-index: 1;
+  }
+  /*groupContent positioning and flex*/
+  .vis-label
+  {
+    display:flex;
+    align-items: center; 
+  }
+  .vis-inner
+  {
+    flex:auto;
+    display:flex;
+    text-align: center;
+  } 
+  .pseudoTable
+  {
+    flex:auto;
+    display:flex;
+    align-items: center;
+    border-collapse: collapse;
+  }
+  .paddedTd
+  {
+    flex: auto;
+	padding: 0 15px;
+  }
+  .paddedTd + .paddedTd
+  {
+    border-left: black solid 1px;
+  }
+  #pseudoTableHeaders
+  {
+	display:flex;
+    text-align: center;
+	margin-left:7px;
+	margin-top:7px;
+  }
+  #pseudoTableHeaders .paddedTd{border:none;}
+  /*Navigation button*/
+  .iconButton
+  {
+	max-height:15px;
+	max-width:15px;
+	margin-top:3px;
+  }
+  .styledButton
+  {
+	background-color: white;
+    border: 1px solid #d3d3d3;
+  }
+  .styledButton:active
+  {
+	background-color: black;
+  }
+  .styledButton:hover
+  {
+	border: 1px solid #505050;
   }
   
