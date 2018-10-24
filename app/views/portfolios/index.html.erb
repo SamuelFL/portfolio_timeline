@@ -15,14 +15,14 @@
 	<input type="checkbox" onclick="updateProgressBar()" id="progressBarCheckbox">Indicador de progreso
   </div>
   <div class="optMenuItem" id="filterSection">
-	<select>
+	<select id="statusSelector">
 	  <option selected disabled hidden style='display: none' value=''> -- Seleccione estado -- </option>
 	  <% @statuses.each do |status| %>
 	    <option value=<%= status.id %>><%= status.name %></option>
 	  <% end %>
 	</select>
 	<button>Aplicar filtro</button>
-	<button>Limpiar filtro</button>
+	<button onclick="clearFilter()">Limpiar filtro</button>
   </div>
 </div>
 
@@ -36,19 +36,25 @@
     <% @issues.each do |issue| %>
 	<% @start = issue.custom_field_value(@startDateID) %>
 	<% @end = issue.custom_field_value(@dueDateID) %>
-	var button = '<button class="styledButton" onclick="moveWindow(<%= @start.split(/(\d{4})\-(\d{1,2})\-(\d{1,2})/) %>)"><img class=iconButton src="/plugin_assets/portfolio_timeline/images/beginnginIcon.svg"></img></button>';
 	  groups.add({id: <%= issue.id %>,
-		          content: '<div class="paddedTd"><%= issue.subject %></div><div class="paddedTd max50">'+button+'</div>',
+		          content: '<%= issue.subject %>',
+				  button: '<button class="styledButton" onclick="moveWindow(<%= @start.split(/(\d{4})\-(\d{1,2})\-(\d{1,2})/) %>)">\
+							<img class=iconButton src="/plugin_assets/portfolio_timeline/images/beginnginIcon.svg"></img>\
+						   </button>',
 				  subgroupOrder: function (a,b) {return a.subgroupOrder - b.subgroupOrder;},
 				  subgroupStack: {'<%= issue.id %>-line': true, '<%= issue.id %>-hitos': true},
-				  extraColumns: ['<%= issue.status %>','XX.XX Nombre del sistema/subsistema']
+				  status: '<%= issue.status %>',
+				  system: 'XX.XX Nombre del sistema/subsistema'
 					});
 	  var issueData = {
 	  group: '<%= issue.id %>',
 	  subgroup:'<%= issue.id %>-line',
 	  subgroupOrder:1,
 	  title:'Fecha inicio planificada: <%= @start %><br>Fecha fin planificada: <%= @end %>',
-	  visibleFrameTemplate: '<div class="progress-wrapper"><div class="progress" style="width:<%= issue.done_ratio %>%"></div><label class="progress-label"><%= issue.done_ratio %>%<label></div>',
+	  visibleFrameTemplate: '<div class="progress-wrapper">\
+							   <div class="progress" style="width:<%= issue.done_ratio %>%"></div>\
+							   <label class="progress-label"><%= issue.done_ratio %>%<label>\
+							 </div>',
   	  start: '<%= @start %>',
   	  end: '<%= @end %>'};
 	  items.add(issueData);
@@ -79,10 +85,11 @@
       },
 	  groupTemplate: 	function(item) {
 			var tableContent = '<div class="pseudoTable">\
-									<div class="paddedTd">'+item.extraColumns[1]+'</div>\
-									<div class="paddedTd max50">'+item.id+'\
-									</div>'+item.content+'\
-									<div class="paddedTd">'+item.extraColumns[0]+'</div>\
+									<div class="paddedTd">'+item.system+'</div>\
+									<div class="paddedTd max50">'+item.id+'</div>\
+									<div class="paddedTd">'+item.status+'</div>\
+									<div class="paddedTd max50">'+item.button+'</div>\
+									<div class="paddedTd">'+item.content+'</div>\
 								</div>';
 			return tableContent;
 		}
@@ -95,9 +102,9 @@
 					<div class="pseudoTable">\
 						<div class="paddedTd">Sistema</div>\
 						<div class="paddedTd max50">ID</div>\
-						<div class="paddedTd">Nombre</div>\
-						<div class="paddedTd max50">Ir a inicio</div>\
 						<div class="paddedTd">Estado</div>\
+						<div class="paddedTd max50">Ir a inicio</div>\
+						<div class="paddedTd">Descripción</div>\
 					</div>';
 	$('.vis-timeline').first().prepend(layer);
 	$('#pseudoTableHeaders').width(width);
