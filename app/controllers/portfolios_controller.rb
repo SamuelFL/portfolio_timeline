@@ -7,5 +7,6 @@ class PortfoliosController < ApplicationController
 	@startDateID = CustomField.select('id').find_by name: 'Fecha inicio planificada' 
 	@dueDateID = CustomField.select('id').find_by name: 'Fecha fin planificada'
 	@hitosFieldID = CustomField.select('id').find_by name: 'Hitos'
+	@statuses= IssueStatus.all
   end
 end

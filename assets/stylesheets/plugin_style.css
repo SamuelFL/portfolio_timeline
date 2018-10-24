@@ -1,34 +1,32 @@
+/*Options menu*/
+#optMenu
+{
+  display:flex;
+}
+.optMenuItem
+{
+  flex:auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+
 /*Background Colors*/
-  .vis-time-axis .vis-grid.vis-january,
-  .vis-time-axis .vis-grid.vis-february,
-  .vis-time-axis .vis-grid.vis-march,
-  .vis-time-axis .vis-grid.vis-april
+  .vis-time-axis .vis-grid.vis-saturday, 
+  .vis-time-axis .vis-grid.vis-sunday
   {
-    background: #a3b8cc;
+    background: #d3d3d3;
   }
-  .vis-time-axis .vis-grid.vis-may,
-  .vis-time-axis .vis-grid.vis-june,
-  .vis-time-axis .vis-grid.vis-july,
-  .vis-time-axis .vis-grid.vis-august
-  {
-    background: #d8ecff;
-  }
-  .vis-time-axis .vis-grid.vis-september,
-  .vis-time-axis .vis-grid.vis-october,
-  .vis-time-axis .vis-grid.vis-november,
-  .vis-time-axis .vis-grid.vis-december
-  {
-    background: #c3d4e5;
-  }
-  /*Milestones*/
+  /*Timeline items*/
   .vis-point
   {
 	display: none;
   }
   .vis-item.vis-range
   {
-    border-color: #ffadc4;
-    background: #e59cb0;
+    border-color: #90a3cc;
+    background: #90a3cc;
   }
   .vis-item.vis-dot 
   {
@@ -36,7 +34,7 @@
     height: 8px; 
     border: none;
     border-radius: 0px;
-    background:#ff9966;
+    background:#707070;
     -webkit-transform: rotate(45deg);
     -moz-transform: rotate(45deg);
     -ms-transform: rotate(45deg);
@@ -89,13 +87,12 @@
   }
   .paddedTd
   {
-	max-width: 250px;
-    flex: auto;
+	width: 150px;
 	padding: 0 15px;
   }
-  .paddedTd + .paddedTd
+  .max50
   {
-    border-left: black solid 1px;
+	max-width: 50px;
   }
   #pseudoTableHeaders
   {
@@ -104,7 +101,11 @@
 	margin-left:7px;
 	margin-top:7px;
   }
-  #pseudoTableHeaders .paddedTd{border:none;}
+  #pseudoTableHeaders .paddedTd
+  {
+	border:none;
+  }
+  
   /*Navigation button*/
   .iconButton
   {

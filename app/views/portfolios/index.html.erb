@@ -8,30 +8,42 @@
 	<%= javascript_include_tag 'plugin', :plugin => 'portfolio_timeline' %>
 	
 <% end %>
-
-<p>
-  <h2>Opciones de visualización</h2>
-  <input type="checkbox" onclick="updateHitos()" id="hitosCheckbox">Hitos
-  <input type="checkbox" onclick="updateProgressBar()" id="progressBarCheckbox">Indicador de progreso
-</p>
+<div id="optMenu">
+  <div class="optMenuItem" id="checkboxSection">
+    <h4>Mostrar: </h3>
+    <input type="checkbox" onclick="updateHitos()" id="hitosCheckbox">Hitos
+	<input type="checkbox" onclick="updateProgressBar()" id="progressBarCheckbox">Indicador de progreso
+  </div>
+  <div class="optMenuItem" id="filterSection">
+	<select>
+	  <option selected disabled hidden style='display: none' value=''> -- Seleccione estado -- </option>
+	  <% @statuses.each do |status| %>
+	    <option value=<%= status.id %>><%= status.name %></option>
+	  <% end %>
+	</select>
+	<button>Aplicar filtro</button>
+	<button>Limpiar filtro</button>
+  </div>
+</div>
 
 <div id="visualization"></div>
 <script type="text/javascript">
- 
+
   var container = document.getElementById('visualization');
   var groups = new vis.DataSet();
-	
+
   var items = new vis.DataSet();
     <% @issues.each do |issue| %>
 	<% @start = issue.custom_field_value(@startDateID) %>
 	<% @end = issue.custom_field_value(@dueDateID) %>
-	  groups.add({id: <%= issue.id %>,  
-		          content: '<button class="styledButton" onclick="moveWindow(<%= @start.split(/(\d{4})\-(\d{1,2})\-(\d{1,2})/) %>)"><img class=iconButton src="/plugin_assets/portfolio_timeline/images/beginnginIcon.svg"></img></button>  <%= issue.subject %>', 
+	var button = '<button class="styledButton" onclick="moveWindow(<%= @start.split(/(\d{4})\-(\d{1,2})\-(\d{1,2})/) %>)"><img class=iconButton src="/plugin_assets/portfolio_timeline/images/beginnginIcon.svg"></img></button>';
+	  groups.add({id: <%= issue.id %>,
+		          content: '<div class="paddedTd"><%= issue.subject %></div><div class="paddedTd max50">'+button+'</div>',
 				  subgroupOrder: function (a,b) {return a.subgroupOrder - b.subgroupOrder;},
 				  subgroupStack: {'<%= issue.id %>-line': true, '<%= issue.id %>-hitos': true},
-				  extraColumns: ['<%= issue.status %>']
-					});			
-	  var issueData = { 
+				  extraColumns: ['<%= issue.status %>','XX.XX Nombre del sistema/subsistema']
+					});
+	  var issueData = {
 	  group: '<%= issue.id %>',
 	  subgroup:'<%= issue.id %>-line',
 	  subgroupOrder:1,
@@ -43,7 +55,7 @@
 	  <% @hitos = issue.custom_field_value(@hitosFieldID).split(/(\[\d{4}-\d{1,2}-\d{1,2}\|.*\])/) %>
 	  <% @hitos.each do |hito| %>
 	    <% if !hito.blank? %>
-	      <% hitoSplitted= hito.split(/\[(\d{4})\-(\d{1,2})\-(\d{1,2})\|(.*)\]/) %> 
+	      <% hitoSplitted= hito.split(/\[(\d{4})\-(\d{1,2})\-(\d{1,2})\|(.*)\]/) %>
 		  var hitoData = {start: '<%= hitoSplitted[1] %>-<%= hitoSplitted[2] %>-<%= hitoSplitted[3] %>',
 			              content: '<%= hitoSplitted[4] %>',
 			              group: '<%= issue.id %>',
@@ -55,7 +67,7 @@
 	    <% end %>
 	  <% end %>
   	<% end %>
-	  
+
     var options = {
 	  locale:'es',
 	  orientation: 'top',
@@ -66,15 +78,27 @@
         }
       },
 	  groupTemplate: 	function(item) {
-			var tableContent = '<div class="pseudoTable"><div class="paddedTd">'+item.content+'</div><div class="paddedTd">'+item.extraColumns[0]+'</div></div>';
+			var tableContent = '<div class="pseudoTable">\
+									<div class="paddedTd">'+item.extraColumns[1]+'</div>\
+									<div class="paddedTd max50">'+item.id+'\
+									</div>'+item.content+'\
+									<div class="paddedTd">'+item.extraColumns[0]+'</div>\
+								</div>';
 			return tableContent;
 		}
 	};
-	
+
     var timeline = new vis.Timeline(container, items, options);
     timeline.setGroups(groups);
 	var width = document.getElementsByClassName('vis-labelset')[0].offsetWidth;
-	var layer = '<div id="pseudoTableHeaders"><div class="pseudoTable"><div class="paddedTd">Nombre</div><div class="paddedTd">Estado</div></div>';
+	var layer = '<div id="pseudoTableHeaders">\
+					<div class="pseudoTable">\
+						<div class="paddedTd">Sistema</div>\
+						<div class="paddedTd max50">ID</div>\
+						<div class="paddedTd">Nombre</div>\
+						<div class="paddedTd max50">Ir a inicio</div>\
+						<div class="paddedTd">Estado</div>\
+					</div>';
 	$('.vis-timeline').first().prepend(layer);
 	$('#pseudoTableHeaders').width(width);
   </script>
