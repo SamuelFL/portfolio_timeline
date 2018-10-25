@@ -90,11 +90,10 @@
       },
 	  groupTemplate: 	function(item) {
 			var tableContent = '<div class="pseudoTable">\
-									<div class="paddedTd" style="text-align:left;">'+item.system+'</div>\
 									<div class="paddedTd max50"><a href="/issues/'+item.id+'">'+item.id+'</a></div>\
 									<div class="paddedTd">'+item.status+'</div>\
-									<div class="paddedTd max50">'+item.button+'</div>\
 									<div class="paddedTd" style="text-align:left;">'+item.content+'</div>\
+									<div class="paddedTd max50">'+item.button+'</div>\
 								</div>';
 			return tableContent;
 		}
@@ -105,11 +104,10 @@
 	var width = document.getElementsByClassName('vis-labelset')[0].offsetWidth;
 	var layer = '<div id="pseudoTableHeaders">\
 					<div class="pseudoTable">\
-						<div class="paddedTd">Sistema</div>\
 						<div class="paddedTd max50">ID</div>\
 						<div class="paddedTd">Estado</div>\
-						<div class="paddedTd max50">Ir a inicio</div>\
 						<div class="paddedTd">Descripción</div>\
+						<div class="paddedTd max50">Ir a inicio</div>\
 					</div>';
 	$('.vis-timeline').first().prepend(layer);
 	$('#pseudoTableHeaders').width(width);
