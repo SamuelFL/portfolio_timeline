@@ -54,3 +54,22 @@ function moveWindow(startArray){
             end:  endDate
         });
 }
+
+function applyFilter(){
+	var selector = document.getElementById('statusSelector');
+	var status = selector.options[selector.selectedIndex].text;
+	var items = groups.get();
+	var toRemove = [];
+	for(var i=0;i<items.length;i++){
+		if(items[i].status != status){
+			toRemove.push(items[i].id);
+		}
+	}
+	document.getElementById('applyStatusFilter').style.display = 'none';
+	document.getElementById('clearStatusFilter').style.display = 'inline-block';
+	selector.disabled=true;
+	groups.remove(toRemove);
+}
+function clearFilter(){
+	window.location.reload();
+}

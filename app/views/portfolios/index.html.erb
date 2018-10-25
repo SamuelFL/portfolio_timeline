@@ -6,23 +6,28 @@
 	<link href="/plugin_assets/portfolio_timeline/vis/dist/vis.css" rel="stylesheet" type="text/css" />
 	<%= stylesheet_link_tag 'plugin_style', :plugin => 'portfolio_timeline' %>
 	<%= javascript_include_tag 'plugin', :plugin => 'portfolio_timeline' %>
-	
+
 <% end %>
+
 <div id="optMenu">
   <div class="optMenuItem" id="checkboxSection">
     <h4>Mostrar: </h3>
     <input type="checkbox" onclick="updateHitos()" id="hitosCheckbox">Hitos
 	<input type="checkbox" onclick="updateProgressBar()" id="progressBarCheckbox">Indicador de progreso
   </div>
-  <div class="optMenuItem" id="filterSection">
-	<select id="statusSelector">
-	  <option selected disabled hidden style='display: none' value=''> -- Seleccione estado -- </option>
-	  <% @statuses.each do |status| %>
-	    <option value=<%= status.id %>><%= status.name %></option>
-	  <% end %>
-	</select>
-	<button>Aplicar filtro</button>
-	<button onclick="clearFilter()">Limpiar filtro</button>
+  <div class="optMenuItem">
+  <div id="filterSection">
+	<div class="filterItem">
+		<select id="statusSelector">
+			<option selected disabled hidden style='display: none' value=''> -- Seleccione estado -- </option>
+			<% @statuses.each do |status| %>
+				<option value=<%= status.name %>><%= status.name %></option>
+			<% end %>
+		</select>
+		<button class="optButton" id="applyStatusFilter" onclick="applyFilter()">Aplicar filtro</button>
+		<button class="optButton" id="clearStatusFilter" onclick="clearFilter()" style="display:none;">Limpiar filtro</button>
+	</div>
+	</div>
   </div>
 </div>
 
@@ -85,11 +90,11 @@
       },
 	  groupTemplate: 	function(item) {
 			var tableContent = '<div class="pseudoTable">\
-									<div class="paddedTd">'+item.system+'</div>\
-									<div class="paddedTd max50">'+item.id+'</div>\
+									<div class="paddedTd" style="text-align:left;">'+item.system+'</div>\
+									<div class="paddedTd max50"><a href="/issues/'+item.id+'">'+item.id+'</a></div>\
 									<div class="paddedTd">'+item.status+'</div>\
 									<div class="paddedTd max50">'+item.button+'</div>\
-									<div class="paddedTd">'+item.content+'</div>\
+									<div class="paddedTd" style="text-align:left;">'+item.content+'</div>\
 								</div>';
 			return tableContent;
 		}

@@ -10,6 +10,24 @@
   align-items: center;
   justify-content: flex-end;
 }
+#checkboxSection
+{
+  justify-content: flex-start;
+}
+#filterSection
+{
+  display:flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+select
+{
+  width: 200px;
+}
+.optButton
+{
+  width: 100px
+}
 
 
 /*Background Colors*/
