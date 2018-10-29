@@ -5,10 +5,6 @@ class PortfoliosController < ApplicationController
 	@projectName = Project.select('name').find_by id: @projectId
 	@issues = Issue.where(project_id: @projectId)
 	
-	/@startDateID = CustomField.select('id').find_by name: 'Fecha de inicio planificada' 
-	@dueDateID = CustomField.select('id').find_by name: 'Fecha de fin planificada'
-	@hitosFieldID = CustomField.select('id').find_by name: 'Hitos planificados'/
-	
 	@startString = Setting.plugin_portfolio_timeline['start_date']
 	@endString = Setting.plugin_portfolio_timeline['due_date']
 	

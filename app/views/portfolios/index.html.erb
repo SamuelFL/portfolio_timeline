@@ -41,6 +41,8 @@
     <% @issues.each do |issue| %>
 	<% @start = issue.custom_field_value(@startDateID) %>
 	<% @end = issue.custom_field_value(@dueDateID) %>
+	<% if @start!=""%>
+	<% if @end!=""%>
 	  groups.add({id: <%= issue.id %>,
 		          content: '<%= issue.subject %>',
 				  button: '<button class="styledButton" onclick="moveWindow(<%= @start.split(/(\d{4})\-(\d{1,2})\-(\d{1,2})/) %>)">\
@@ -76,6 +78,8 @@
 			              type: 'point'};
 		  items.add(hitoData);
 	    <% end %>
+	  <% end %>
+	  <% end %>
 	  <% end %>
   	<% end %>
 
