@@ -46,11 +46,12 @@
 	  groups.add({id: <%= issue.id %>,
 		          content: '<%= issue.subject %>',
 				  button: '<button class="styledButton" onclick="moveWindow(<%= @start.split(/(\d{4})\-(\d{1,2})\-(\d{1,2})/) %>)">\
-							<img class=iconButton src="/plugin_assets/portfolio_timeline/images/beginnginIcon.svg"></img>\
+							<div class=iconButton><%= image_tag('goToStartIcon.svg', :plugin => 'portfolio_timeline') %></div>\
 						   </button>',
 				  subgroupOrder: function (a,b) {return a.subgroupOrder - b.subgroupOrder;},
 				  subgroupStack: {'<%= issue.id %>-line': true, '<%= issue.id %>-hitos': true},
 				  status: '<%= issue.status %>',
+				  link: '<%= link_to_issue(issue,:subject => false) %>',
 				  system: 'XX.XX Nombre del sistema/subsistema'
 					});
 	  var issueData = {
@@ -94,7 +95,7 @@
       },
 	  groupTemplate: 	function(item) {
 			var tableContent = '<div class="pseudoTable">\
-									<div class="paddedTd max50"><a href="/issues/'+item.id+'">'+item.id+'</a></div>\
+									<div class="paddedTd max50">'+item.link+'</div>\
 									<div class="paddedTd">'+item.status+'</div>\
 									<div class="paddedTd" style="text-align:left;">'+item.content+'</div>\
 									<div class="paddedTd max50">'+item.button+'</div>\
