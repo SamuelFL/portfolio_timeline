@@ -19,7 +19,7 @@
   <div id="filterSection">
 	<div class="filterItem">
 		<select id="statusSelector" autocomplete="off">
-			<option selected disabled hidden style='display: none' value=''> -- Seleccione estado -- </option>
+			<option selected value=''>-- Seleccione estado --</option>
 			<% @statuses.each do |status| %>
 				<option value=<%= status.name %>><%= status.name %></option>
 			<% end %>
