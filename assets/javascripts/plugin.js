@@ -38,20 +38,46 @@ function moveWindow(startArray){
         });
 }
 
-function applyFilter(){
+function applyTrackerFilter(){
+	var selector = document.getElementById('trackerSelector');
+	var tracker = selector.options[selector.selectedIndex].value;
+	var items = groups.get();
+	trackerFilteredGroups.clear();
+	if(tracker != ""){
+		for(var i=0;i<items.length;i++){
+			if(items[i].trackerId != tracker){
+				items[i].visible= false;
+			}
+		}
+		trackerFilteredGroups.add(items);
+		timeline.setGroups(trackerFilteredGroups);
+	}else{
+		timeline.setGroups(groups);
+	}	
+	document.getElementById('statusSelector').value="";
+}
+function applyStatusFilter(){
 	var selector = document.getElementById('statusSelector');
 	var status = selector.options[selector.selectedIndex].text;
-	var items = groups.get();
+	if(trackerFilteredGroups.length > 0){
+		var items = trackerFilteredGroups.get();
+	}else{
+		var items = groups.get();
+	}
 	if(status != "-- Seleccione estado --"){
 		for(var i=0;i<items.length;i++){
 			if(items[i].status != status){
 				items[i].visible= false;
 			}
 		}
-		var shownGroups = new vis.DataSet();
-		shownGroups.add(items);
-		timeline.setGroups(shownGroups);
+		var statusFilteredGroups = new vis.DataSet();
+		statusFilteredGroups.add(items);
+		timeline.setGroups(statusFilteredGroups);
 	}else{
-		timeline.setGroups(groups);
+		if(trackerFilteredGroups.length > 0){
+			timeline.setGroups(trackerFilteredGroups);
+		}else{
+			timeline.setGroups(groups);
+		}
 	}	
 }
