@@ -1,8 +1,8 @@
 class PortfoliosController < ApplicationController
   def index
     @identifier = params[:id]
+	@project = Project.find_by identifier: @identifier
 	@projectId = Project.select('id').where('identifier = ?', @identifier)
-	@projectName = Project.select('name').find_by id: @projectId
 	@issues = Issue.where(project_id: @projectId)
 	
 	@startString = Setting.plugin_portfolio_timeline['start_date']

@@ -1,27 +1,54 @@
+<% @cfNames= CustomField.all %>
+<% @currentStartDate = Setting.plugin_portfolio_timeline['start_date'] %>
+<% @currentDueDate = Setting.plugin_portfolio_timeline['due_date'] %>
+<% @currentHitos = Setting.plugin_portfolio_timeline['hitos'] %>
+
+
 <table>
   <tbody>
     <tr>
       <th>Nombre del campo para fecha de inicio planificada</th>
       <td>
-        <input type="text" id="start_date" 
-                           value="<%= settings['start_date'] %>" 
-                           name="settings[start_date]" >
+		<select id="start_date" name="settings[start_date]">
+			<% @cfNames.each do |cfName| %>
+				<option <% if(cfName.name==@currentStartDate) %>
+							<%= 'selected' %>
+						<% end %>
+						value="<%= cfName.name %>">
+						<%= cfName.name %>
+				</option>
+			<% end %>
+		</select>
       </td>
     </tr>
 	<tr>
       <th>Nombre del campo para fecha de fin planificada</th>
       <td>
-        <input type="text" id="due_date" 
-                           value="<%= settings['due_date'] %>" 
-                           name="settings[due_date]" >
+	    <select id="due_date" name="settings[due_date]">
+			<% @cfNames.each do |cfName| %>
+				<option <% if(cfName.name==@currentDueDate) %>
+							<%= 'selected' %>
+						<% end %>
+						value="<%= cfName.name %>">
+						<%= cfName.name %>
+				</option>
+			<% end %>
+		</select>
       </td>
     </tr>
 	<tr>
       <th>Nombre del campo para hitos planificados</th>
       <td>
-        <input type="text" id="hitos" 
-                           value="<%= settings['hitos'] %>" 
-                           name="settings[hitos]" >
+	    <select id="hitos" name="settings[hitos]">
+			<% @cfNames.each do |cfName| %>
+				<option <% if(cfName.name==@currentHitos) %>
+							<%= 'selected' %>
+						<% end %>
+						value="<%= cfName.name %>">
+						<%= cfName.name %>
+				</option>
+			<% end %>
+		</select>
       </td>
     </tr>
   </tbody>
