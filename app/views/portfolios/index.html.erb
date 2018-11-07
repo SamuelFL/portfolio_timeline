@@ -53,21 +53,18 @@
 	<% if @start!=""%>
 	<% if @end!=""%>
 	  groups.add({id: <%= issue.id %>,
-		          content: '<%= issue.subject %>',
-				  button: '<button class="styledButton" onclick="moveWindow(<%= @start.split(/(\d{4})\-(\d{1,2})\-(\d{1,2})/) %>)">\
-							<div class=iconButton><%= image_tag('goToStartIcon.svg', :plugin => 'portfolio_timeline') %></div>\
-						   </button>',
+		          content: '<span onclick="moveWindow(<%= @start.split(/(\d{4})\-(\d{1,2})\-(\d{1,2})/) %>)"><%= issue.subject %></span>',
 				  subgroupOrder: function (a,b) {return a.subgroupOrder - b.subgroupOrder;},
 				  subgroupStack: {'<%= issue.id %>-line': true, '<%= issue.id %>-hitos': true},
 				  status: '<%= issue.status %>',
-				  link: '<%= link_to_issue(issue,:subject => false) %>',
+				  link: '<%= link_to_issue(issue, :subject => false, :tracker => false) %>',
 				  trackerId: '<%= issue.tracker_id%>'
 					});
 	  var issueData = {
 	  group: '<%= issue.id %>',
 	  subgroup:'<%= issue.id %>-line',
 	  subgroupOrder:1,
-	  title:'Fecha inicio planificada: <%= @start %><br>Fecha fin planificada: <%= @end %>',
+	  title:'Fecha de inicio planificada: <%= @start %><br>Fecha de fin planificada: <%= @end %>',
 	  visibleFrameTemplate: '<div class="progress-wrapper">\
 							   <div class="progress" style="width:<%= issue.done_ratio %>%"></div>\
 							   <label class="progress-label"><%= issue.done_ratio %>%<label>\
@@ -80,11 +77,12 @@
 	    <% if !hito.blank? %>
 	      <% hitoSplitted= hito.split(/\[(\d{4})\-(\d{1,2})\-(\d{1,2})\|(.*)\]/) %>
 		  var hitoData = {start: '<%= hitoSplitted[1] %>-<%= hitoSplitted[2] %>-<%= hitoSplitted[3] %>',
-			              content: '<%= hitoSplitted[4] %>',
+			              content: '',
 			              group: '<%= issue.id %>',
 			              subgroup: '<%= issue.id %>-hitos',
 			              subgroupOrder:2,
-						  title: 'Fecha: <%= hitoSplitted[1] %>-<%= hitoSplitted[2] %>-<%= hitoSplitted[3] %>',
+						  title: 'Fecha: <%= hitoSplitted[1] %>-<%= hitoSplitted[2] %>-<%= hitoSplitted[3] %><br>\
+								  <%= hitoSplitted[4] %>',
 			              type: 'point'};
 		  items.add(hitoData);
 	    <% end %>
@@ -104,10 +102,9 @@
       },
 	  groupTemplate: 	function(item) {
 			var tableContent = '<div class="pseudoTable">\
-									<div class="paddedTd max50">'+item.link+'</div>\
-									<div class="paddedTd">'+item.status+'</div>\
-									<div class="paddedTd" style="text-align:left;">'+item.content+'</div>\
-									<div class="paddedTd max50">'+item.button+'</div>\
+									<div class="paddedTd max75">'+item.link+'</div>\
+									<div class="paddedTd max200">'+item.status+'</div>\
+									<div class="paddedTd max300" style="text-align:left;">'+item.content+'</div>\
 								</div>';
 			return tableContent;
 		}
@@ -118,10 +115,9 @@
 	var width = document.getElementsByClassName('vis-labelset')[0].offsetWidth;
 	var layer = '<div id="pseudoTableHeaders">\
 					<div class="pseudoTable">\
-						<div class="paddedTd max50">ID</div>\
-						<div class="paddedTd">Estado</div>\
-						<div class="paddedTd">Descripción</div>\
-						<div class="paddedTd max50">Ir a inicio</div>\
+						<div class="paddedTd max75">ID</div>\
+						<div class="paddedTd max200">Estado</div>\
+						<div class="paddedTd max300">Descripción</div>\
 					</div>';
 	$('.vis-timeline').first().prepend(layer);
 	$('#pseudoTableHeaders').width(width);
