@@ -61,14 +61,14 @@
 				  trackerId: '<%= issue.tracker_id%>'
 					});
 	  var issueData = {
+	  content: '<div class="progress-wrapper">\
+							   <div class="progress" style="width:<%= issue.done_ratio %>%"></div>\
+							   <label class="progress-label"><%= issue.done_ratio %>%<label>\
+							 </div>',
 	  group: '<%= issue.id %>',
 	  subgroup:'<%= issue.id %>-line',
 	  subgroupOrder:1,
 	  title:'Fecha de inicio planificada: <%= @start %><br>Fecha de fin planificada: <%= @end %>',
-	  visibleFrameTemplate: '<div class="progress-wrapper">\
-							   <div class="progress" style="width:<%= issue.done_ratio %>%"></div>\
-							   <label class="progress-label"><%= issue.done_ratio %>%<label>\
-							 </div>',
   	  start: '<%= @start %>',
   	  end: '<%= @end %>'};
 	  items.add(issueData);
@@ -95,11 +95,6 @@
 	  locale:'es',
 	  orientation: 'top',
 	  groupOrder: 'id',
-	  visibleFrameTemplate: function(item) {
-        if (item.visibleFrameTemplate) {
-          return item.visibleFrameTemplate;
-        }
-      },
 	  groupTemplate: 	function(item) {
 			var tableContent = '<div class="pseudoTable">\
 									<div class="paddedTd max75">'+item.link+'</div>\
