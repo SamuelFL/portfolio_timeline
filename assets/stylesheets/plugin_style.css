@@ -117,9 +117,10 @@
     align-items: center;
     border-collapse: collapse;
   }
-  .max300
+  .max400
   {
-	width: 300px;
+	  min-width: 200px;
+	  max-width: 400px;
   }
   .max200
   {
