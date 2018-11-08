@@ -43,7 +43,7 @@ function applyTrackerFilter(){
 	var tracker = selector.options[selector.selectedIndex].value;
 	var items = groups.get();
 	trackerFilteredGroups.clear();
-	if(tracker != ""){
+	if(tracker != 0){
 		for(var i=0;i<items.length;i++){
 			if(items[i].trackerId != tracker){
 				items[i].visible= false;
@@ -53,9 +53,23 @@ function applyTrackerFilter(){
 		timeline.setGroups(trackerFilteredGroups);
 	}else{
 		timeline.setGroups(groups);
-	}	
+	}
+	setStatusSelectorOptions(tracker);
 	document.getElementById('statusSelector').value="";
 }
+
+function setStatusSelectorOptions(trackerId){
+	var currentTrackerArray = statusPerTrackerArray[trackerId];
+	var optionsAsString = "";
+	optionsAsString+= "<option selected value=''>-- Seleccione estado --</option>"
+	for(var i = 0; i < currentTrackerArray.length; i++) {
+		if(currentTrackerArray[i]!=0){
+			optionsAsString += "<option value='" + currentTrackerArray[i] + "'>" + currentTrackerArray[i] + "</option>";
+		}
+	}
+	$("select[id='statusSelector']").find('option').remove().end().append($(optionsAsString));
+}
+
 function applyStatusFilter(){
 	var selector = document.getElementById('statusSelector');
 	var status = selector.options[selector.selectedIndex].text;
