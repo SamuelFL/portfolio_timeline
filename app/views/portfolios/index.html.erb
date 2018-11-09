@@ -30,6 +30,7 @@
   </div>
   <div id="filterSection">
 	<div class="filterItem">
+	<span style ="font-weight: bold;">Tipo</span>
 		<select id="trackerSelector" onchange="applyTrackerFilter()" autocomplete="off">
 			<option selected value=0>-- Seleccione tracker --</option>
 			<% @trackers.each do |tracker| %>
@@ -38,6 +39,7 @@
 		</select>
 	</div>
 	<div class="filterItem">
+	<span style ="font-weight: bold;">Estado</span>
 		<select id="statusSelector" onchange="applyStatusFilter()" autocomplete="off">
 			<option selected value=''>-- Seleccione estado --</option>
 			<% @statuses.each do |status| %>
