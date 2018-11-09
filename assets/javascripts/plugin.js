@@ -95,3 +95,9 @@ function applyStatusFilter(){
 		}
 	}	
 }
+function zoomIn(){
+	timeline.zoomIn(0.85);
+}
+function zoomOut(){
+	timeline.zoomOut(0.85);
+}

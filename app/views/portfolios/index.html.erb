@@ -11,29 +11,39 @@
 
 <div id="optMenu">
   <div class="optMenuItem" id="checkboxSection">
-    <h4>Mostrar: </h3>
+    <h4>Mostrar: </h4>
     <input type="checkbox" onclick="updateElement('hitos')" id="hitosCheckbox" autocomplete="off">Hitos
 	<input type="checkbox" onclick="updateElement('progressBar')" id="progressBarCheckbox" autocomplete="off">Indicador de progreso
   </div>
   <div class="optMenuItem">
+  <div id="zoomSection">
+	<button class="styledButton" id="zoomInButton" onclick="zoomIn()">
+	  <div class=iconButton>
+	    <%= image_tag('zoomInIcon.svg', :plugin => 'portfolio_timeline') %>
+      </div>
+	</button>
+	<button class="styledButton" id="zoomOutButton" onclick="zoomOut()">
+	  <div class=iconButton>
+	    <%= image_tag('zoomOutIcon.svg', :plugin => 'portfolio_timeline') %>
+	  </div>
+	</button>
+  </div>
   <div id="filterSection">
 	<div class="filterItem">
-		<select id="trackerSelector" autocomplete="off">
+		<select id="trackerSelector" onchange="applyTrackerFilter()" autocomplete="off">
 			<option selected value=0>-- Seleccione tracker --</option>
 			<% @trackers.each do |tracker| %>
 				<option value=<%= tracker.id %>><%= tracker.name %></option>
 			<% end %>
 		</select>
-		<button class="optButton" id="applyTrackerFilter" onclick="applyTrackerFilter()" >Aplicar filtro</button>
 	</div>
 	<div class="filterItem">
-		<select id="statusSelector" autocomplete="off">
+		<select id="statusSelector" onchange="applyStatusFilter()" autocomplete="off">
 			<option selected value=''>-- Seleccione estado --</option>
 			<% @statuses.each do |status| %>
 				<option value=<%= status.name %>><%= status.name %></option>
 			<% end %>
 		</select>
-		<button class="optButton" id="applyStatusFilter" onclick="applyStatusFilter()">Aplicar filtro</button>
 	</div>
 	</div>
   </div>

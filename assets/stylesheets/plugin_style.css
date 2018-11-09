@@ -14,6 +14,10 @@
   {
     justify-content: flex-start;
   }
+  #zoomSection
+  {
+    margin-right: 100px;
+  }
   #filterSection
   {
     display:flex;
@@ -26,10 +30,39 @@
   }
   .optButton
   {
-    width: 100px
+    width: 150px
   }
 
+  /*Zoom button*/
+  .iconButton
+  {
+	height:25px;
+	width:25px;
+	margin:4px 0;
+  }
+  .iconButton img 
+  {
+    width:100%;
+    height:100%;
+  }
+  .styledButton
+  {
+	background-color: white;
+    border: 1px solid #d3d3d3;
+  }
+  .styledButton:active
+  {
+	background-color: black;
+  }
+  .styledButton:hover
+  {
+	border: 1px solid #505050;
+  }
+  
   /*Background Colors*/
+  .vis-foreground  .vis-group:nth-child(odd), .vis-labelset .vis-label:nth-child(odd) {
+    background-color: white;
+  }
   .vis-time-axis .vis-grid.vis-saturday, 
   .vis-time-axis .vis-grid.vis-sunday
   {
@@ -39,7 +72,7 @@
   {
 	background-color: #eeeeee;
   }
-  .vis-panel.vis-center
+  .vis-panel.vis-center, .vis-panel.vis-left
   {
     background-color: #f6f7f8;
   }
@@ -69,6 +102,7 @@
   }
 
   /*Progress Bars*/
+  
   .vis-item .vis-item-content 
   {
     padding:0px;
@@ -76,7 +110,7 @@
   .progress-wrapper 
   {
 	display: none;
-    background: white;
+    background: #90a3cc;
     width: 100%;
     height: 12px;
     text-align: center;
@@ -90,7 +124,7 @@
     position: absolute;
     left: 0px;
     top: 0px;
-    background: #63eda0;
+    background: #707070;
   }
   .progress-label
   {
@@ -133,6 +167,7 @@
   }
   #pseudoTableHeaders
   {
+	font-weight: bold;
 	display:flex;
     text-align: center;
 	margin-left:7px;
@@ -142,3 +177,4 @@
   {
 	border:none;
   } 
+  
