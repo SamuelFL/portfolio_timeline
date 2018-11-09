@@ -78,9 +78,6 @@ function applyStatusFilter(){
 	}else{
 		var items = groups.get();
 	}
-	for(var i=0;i<items.length;i++){
-		items[i].visible= false;
-	}
 	if(statuses.includes("all")){
 		if(trackerFilteredGroups.length > 0){
 			timeline.setGroups(trackerFilteredGroups);
@@ -89,8 +86,8 @@ function applyStatusFilter(){
 		}
 	}else{
 		for(var i=0;i<items.length;i++){
-			if(statuses.includes(items[i].status)){
-				items[i].visible= true;
+			if(!statuses.includes(items[i].status)){
+				items[i].visible= false;
 			}
 		}
 		var statusFilteredGroups = new vis.DataSet();
