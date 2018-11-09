@@ -116,6 +116,10 @@
 	};
 
     var timeline = new vis.Timeline(container, items, options);
+	timeline.on('rangechanged', function () {
+		updateElement("progressBar");
+		updateElement("hitos");
+	});
     timeline.setGroups(groups);
 	var width = document.getElementsByClassName('vis-labelset')[0].offsetWidth;
 	var layer = '<div id="pseudoTableHeaders">\
