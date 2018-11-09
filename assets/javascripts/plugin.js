@@ -63,7 +63,7 @@ function applyTrackerFilter(){
 function setStatusSelectorOptions(trackerId){
 	var currentTrackerArray = statusPerTrackerArray[trackerId];
 	var optionsAsString = "";
-	optionsAsString+= "<option selected value=''>-- Seleccione estado --</option>"
+	optionsAsString+= "<option selected value='all'>Todos</option>"
 	for(var i = 0; i < currentTrackerArray.length; i++) {
 		if(currentTrackerArray[i]!=0){
 			optionsAsString += "<option value='" + currentTrackerArray[i] + "'>" + currentTrackerArray[i] + "</option>";
@@ -72,7 +72,7 @@ function setStatusSelectorOptions(trackerId){
 	$("select[id='statusSelector']").find('option').remove().end().append($(optionsAsString));
 }
 
-function applyStatusFilter(){
+/*function applyStatusFilter(){
 	var selector = document.getElementById('statusSelector');
 	var status = selector.options[selector.selectedIndex].text;
 	if(trackerFilteredGroups.length > 0){
@@ -98,7 +98,40 @@ function applyStatusFilter(){
 	}	
 	updateElement("progressBar");
 	updateElement("hitos");
+}*/
+
+function applyStatusFilter(){
+	var statuses = $('#statusSelector').val();
+	
+	if(trackerFilteredGroups.length > 0){
+		var items = trackerFilteredGroups.get();
+	}else{
+		var items = groups.get();
+	}
+	for(var i=0;i<items.length;i++){
+		items[i].visible= false;
+	}
+	if(statuses.includes("all")){
+		if(trackerFilteredGroups.length > 0){
+			timeline.setGroups(trackerFilteredGroups);
+		}else{
+			timeline.setGroups(groups);
+		}
+	}else{
+		for(var i=0;i<items.length;i++){
+			if(statuses.includes(items[i].status)){
+				items[i].visible= true;
+			}
+		}
+		var statusFilteredGroups = new vis.DataSet();
+		statusFilteredGroups.add(items);
+		timeline.setGroups(statusFilteredGroups);
+	}
+	updateElement("progressBar");
+	updateElement("hitos");
 }
+
+
 function zoomIn(){
 	timeline.zoomIn(0.85);
 }

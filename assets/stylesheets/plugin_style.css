@@ -13,6 +13,8 @@
   #checkboxSection
   {
     justify-content: flex-start;
+    align-items:flex-end;
+    margin-bottom: 10px;
   }
   #zoomSection
   {
