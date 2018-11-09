@@ -56,6 +56,8 @@ function applyTrackerFilter(){
 	}
 	setStatusSelectorOptions(tracker);
 	document.getElementById('statusSelector').value="";
+	updateElement("progressBar");
+	updateElement("hitos");
 }
 
 function setStatusSelectorOptions(trackerId){
@@ -94,6 +96,8 @@ function applyStatusFilter(){
 			timeline.setGroups(groups);
 		}
 	}	
+	updateElement("progressBar");
+	updateElement("hitos");
 }
 function zoomIn(){
 	timeline.zoomIn(0.85);
