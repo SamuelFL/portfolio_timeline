@@ -33,5 +33,6 @@ class PortfoliosController < ApplicationController
 		@statusPerTrackerArray.insert(tracker.id,@statusesArrayAux.compact)
 	end
 	@statusPerTrackerArray[0]= @nonClosedStatuses.compact
+	@statusPerTrackerArray.map {|e| e ? e : 0}
   end
 end
