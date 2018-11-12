@@ -43,7 +43,7 @@
 		<select id="statusSelector" onchange="applyStatusFilter()" autocomplete="off" multiple size ="3">
 			<option selected value="all">Todos</option>
 			<% @statuses.each do |status| %>
-				<option value=<%= status.name %>><%= status.name %></option>
+				<option value="<%= status.name %>"><%= status.name %></option>
 			<% end %>
 		</select>
 	</div>
