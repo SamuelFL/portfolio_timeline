@@ -19,8 +19,8 @@ class PortfoliosController < ApplicationController
 	@statuses.each do |status|
 		@nonClosedStatuses.insert(status.id,status.name)
 	end
-	
-	@statusPerTrackerArray= Array.new
+	@size = Tracker.maximum('id')
+	@statusPerTrackerArray= Array.new(@size,0)
 	@trackers.each do |tracker|
 		@trackerStatuses = WorkflowTransition.select('new_status_id').distinct.where(['tracker_id = ?',tracker.id])
 		@statusesArrayAux = Array.new
@@ -33,6 +33,8 @@ class PortfoliosController < ApplicationController
 		@statusPerTrackerArray.insert(tracker.id,@statusesArrayAux.compact)
 	end
 	@statusPerTrackerArray[0]= @nonClosedStatuses.compact
+	
 	@statusPerTrackerArray.map {|e| e ? e : 0}
+	
   end
 end
