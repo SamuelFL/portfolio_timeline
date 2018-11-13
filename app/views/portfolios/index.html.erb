@@ -9,47 +9,62 @@
 
 <% end %>
 
-<div id="optMenu">
-  <div class="optMenuItem" id="checkboxSection">
-    <h4>Mostrar: </h4>
-    <input type="checkbox" onclick="updateElement('hitos')" id="hitosCheckbox" autocomplete="off">Hitos
-	<input type="checkbox" onclick="updateElement('progressBar')" id="progressBarCheckbox" autocomplete="off">Indicador de progreso
-  </div>
-  <div class="optMenuItem">
-  <div id="zoomSection">
+<fieldset id="filters" class="collapsible collapsed ">
+	<legend onclick="toggleFieldset(this);">Filtros</legend>
+	<div id="filterBox" style="display:none;">
+		<div class="filterItem">
+			<div><span style ="font-weight: bold;">Tipo</span></div>
+			<div>
+				<select id="trackerSelector" onchange="applyTrackerFilter()" autocomplete="off">
+					<option selected value=0>Todos</option>
+					<% @trackers.each do |tracker| %>
+						<option value=<%= tracker.id %>><%= tracker.name %></option>
+					<% end %>
+				</select>
+			</div>	
+		</div>
+		<div class="filterItem">
+			<div><span style ="font-weight: bold;">Estado</span></div>
+			<div>
+				<select id="statusSelector" onchange="applyStatusFilter()" autocomplete="off" multiple size ="3">
+					<option selected value="all">Todos</option>
+					<% @statuses.each do |status| %>
+						<option value="<%= status.name %>"><%= status.name %></option>
+					<% end %>
+				</select>
+			</div>
+		</div>
+	</div>
+</fieldset>
+<fieldset class="collapsible collapsed">
+	<legend onclick="toggleFieldset(this);">Opciones</legend>
+	<div id="optBox" style="display:none;">
+		<div class="optItem">
+			<h4>Mostrar: </h4>
+			<input type="checkbox" onclick="updateElement('hitos')" id="hitosCheckbox" autocomplete="off">Hitos
+			<input type="checkbox" onclick="updateElement('progressBar')" id="progressBarCheckbox" autocomplete="off">Indicador de progreso
+		</div>
+	</div>
+</fieldset>
+
+
+
+<div id="zoomSection">
 	<button class="styledButton" id="zoomInButton" onclick="zoomIn()">
-	  <div class=iconButton>
-	    <%= image_tag('zoomInIcon.svg', :plugin => 'portfolio_timeline') %>
-      </div>
+		<div class=iconButton>
+			<%= image_tag('zoom_in.png', :plugin => 'portfolio_timeline') %>
+		</div>
 	</button>
 	<button class="styledButton" id="zoomOutButton" onclick="zoomOut()">
-	  <div class=iconButton>
-	    <%= image_tag('zoomOutIcon.svg', :plugin => 'portfolio_timeline') %>
-	  </div>
+		<div class=iconButton>
+			<%= image_tag('zoom_out.png', :plugin => 'portfolio_timeline') %>
+		</div>
 	</button>
-  </div>
-  <div id="filterSection">
-	<div class="filterItem">
-	<span style ="font-weight: bold;">Tipo</span>
-		<select id="trackerSelector" onchange="applyTrackerFilter()" autocomplete="off">
-			<option selected value=0>Todos</option>
-			<% @trackers.each do |tracker| %>
-				<option value=<%= tracker.id %>><%= tracker.name %></option>
-			<% end %>
-		</select>
-	</div>
-	<div class="filterItem">
-	<span style ="font-weight: bold;">Estado</span>
-		<select id="statusSelector" onchange="applyStatusFilter()" autocomplete="off" multiple size ="3">
-			<option selected value="all">Todos</option>
-			<% @statuses.each do |status| %>
-				<option value="<%= status.name %>"><%= status.name %></option>
-			<% end %>
-		</select>
-	</div>
-	</div>
-  </div>
 </div>
+
+
+
+
 
 <div id="visualization"></div>
 <script type="text/javascript">
@@ -109,9 +124,9 @@
 	  groupOrder: 'id',
 	  groupTemplate: 	function(item) {
 			var tableContent = '<div class="pseudoTable">\
-									<div class="paddedTd max75">'+item.link+'</div>\
+									<div class="paddedTd max100">'+item.link+'</div>\
 									<div class="paddedTd max200">'+item.status+'</div>\
-									<div class="paddedTd max400" style="text-align:left;">'+item.content+'</div>\
+									<div class="paddedTd max250" style="text-align:left;"><a>'+item.content+'<br>-></a></div>\
 								</div>';
 			return tableContent;
 		}
@@ -126,9 +141,9 @@
 	var width = document.getElementsByClassName('vis-labelset')[0].offsetWidth;
 	var layer = '<div id="pseudoTableHeaders">\
 					<div class="pseudoTable">\
-						<div class="paddedTd max75">ID</div>\
+						<div class="paddedTd max100">ID</div>\
 						<div class="paddedTd max200">Estado</div>\
-						<div class="paddedTd max400">Descripción</div>\
+						<div class="paddedTd max250">Descripción</div>\
 					</div>';
 	$('.vis-timeline').first().prepend(layer);
 	$('#pseudoTableHeaders').width(width);
