@@ -127,7 +127,9 @@
 			var tableContent = '<div class="pseudoTable">\
 									<div class="paddedTd max100">'+item.link+'</div>\
 									<div class="paddedTd max200">'+item.status+'</div>\
-									<div class="paddedTd max250 description" ><a>'+item.content+'</a></div>\
+									<div class="paddedTd max250" style="text-align:left;" >\
+										<a class="description">'+item.content+'</a>\
+									</div>\
 								</div>';
 			return tableContent;
 		}
