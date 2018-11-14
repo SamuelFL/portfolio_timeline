@@ -51,6 +51,7 @@ function applyTrackerFilter(){
 		}
 		trackerFilteredGroups.add(items);
 		timeline.setGroups(trackerFilteredGroups);
+		fillEmptyTimeline(trackerFilteredGroups);
 	}else{
 		timeline.setGroups(groups);
 	}
@@ -93,11 +94,38 @@ function applyStatusFilter(){
 		var statusFilteredGroups = new vis.DataSet();
 		statusFilteredGroups.add(items);
 		timeline.setGroups(statusFilteredGroups);
+		fillEmptyTimeline(statusFilteredGroups);
 	}
 	updateElement("progressBar");
 	updateElement("hitos");
 }
 
+function fillEmptyTimeline(group){
+	var groupContent =group.get();
+	var emptyItem = {id: 0,
+		          content: '',
+				  subgroupOrder: function (a,b) {return a.subgroupOrder - b.subgroupOrder;},
+				  status: '',
+				  link: '',
+				  trackerId: ''
+					};
+	if(thereIsSomethingVisible(groupContent)){
+		group.remove(0);
+		timeline.setGroups(group);
+	}else{
+		group.add(emptyItem);
+		timeline.setGroups(group);
+	}
+}
+function thereIsSomethingVisible(groupContent){
+	var flag = false
+	for(var i = 0; i<groupContent.length; i++){
+		if(groupContent[i].visible == true){
+			flag=true;
+		}
+	}
+	return flag;
+}
 function zoomIn(){
 	timeline.zoomIn(0.85);
 }

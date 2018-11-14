@@ -62,23 +62,15 @@
   }
   
   /*Background Colors*/
-  
-  
-  .vis-foreground  .vis-group:nth-child(odd) {
-    background-color: rgba(255, 255, 255, 0.7);
-  }
-  .vis-labelset .vis-label:nth-child(odd){
-    background-color: rgba(255, 255, 255, 0.7);
-  }
-  
-  .vis-time-axis .vis-grid.vis-minor{
-    border-color:black;
+  .vis-labelset .vis-label:nth-child(odd)
+  {
+    background-color: white;
   }
   .vis-panel.vis-top
   {
 	background-color: #eeeeee;
   }
-  .vis-panel.vis-center, .vis-panel.vis-left
+  .vis-panel.vis-left
   {
     background-color: rgba(246, 247, 248, 0.5);
   }
@@ -148,6 +140,11 @@
   }
 
   /*groupContent positioning and flex*/
+  .description
+  {
+	text-align:left;
+	cursor: alias;
+  }
   .vis-label
   {
     display:flex;

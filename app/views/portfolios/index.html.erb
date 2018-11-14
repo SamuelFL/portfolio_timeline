@@ -84,6 +84,7 @@
 				  subgroupOrder: function (a,b) {return a.subgroupOrder - b.subgroupOrder;},
 				  subgroupStack: {'<%= issue.id %>-line': true, '<%= issue.id %>-hitos': true},
 				  status: '<%= issue.status %>',
+				  visible: true,
 				  link: '<%= link_to_issue(issue, :subject => false, :tracker => false) %>',
 				  trackerId: '<%= issue.tracker_id%>'
 					});
@@ -126,7 +127,7 @@
 			var tableContent = '<div class="pseudoTable">\
 									<div class="paddedTd max100">'+item.link+'</div>\
 									<div class="paddedTd max200">'+item.status+'</div>\
-									<div class="paddedTd max250" style="text-align:left;"><a>'+item.content+'<br>-></a></div>\
+									<div class="paddedTd max250 description" ><a>'+item.content+'</a></div>\
 								</div>';
 			return tableContent;
 		}
