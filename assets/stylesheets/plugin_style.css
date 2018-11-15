@@ -180,8 +180,8 @@
   }
   .max75
   {
-	min-width: 25px;  
-	max-width: 100px;
+	width: 75px;  
+	
   }
   #pseudoTableHeaders
   {
