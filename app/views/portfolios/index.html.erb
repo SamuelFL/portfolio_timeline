@@ -51,8 +51,6 @@
 	</div>
 </fieldset>
 
-
-
 <div id="zoomSection">
 	<button class="styledButton" id="zoomInButton" onclick="zoomIn()">
 		<div class=iconButton>
@@ -65,10 +63,6 @@
 		</div>
 	</button>
 </div>
-
-
-
-
 
 <div id="visualization"></div>
 <script type="text/javascript">
@@ -144,6 +138,7 @@
 		updateElement("hitos");
 	});
     timeline.setGroups(groups);
+
 	var width = document.getElementsByClassName('vis-labelset')[0].offsetWidth;
 	var sortCrit = ['id','status','contentSortKey'];
 	var layer = '<div id="pseudoTableHeaders">\

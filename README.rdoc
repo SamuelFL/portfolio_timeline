@@ -16,11 +16,11 @@ Uses vis.js  (http://visjs.org/) libraries to display a timeline of issues along
 - In Redmine you´ll need 2 custom fields of type 'date' added to all issues you want displayed.
 - 1 Custom field of type 'long text' added to all issues you want milestones to be displayed. (RegExp for field validation \[\d{4}\-\d{1,2}\-\d{1,2}\|.*\])
 	
-	*The input format is  [YYYY-MM-DD|textAsLongAsLongTextPermits] [YYYY-MM-DD|textAsLongAsLongTextPermits2] [...] linebreaks allowed
+  The input format is [YYYY-MM-DD|textAsLongAsLongTextPermits] [YYYY-MM-DD|textAsLongAsLongTextPermits2] [...] linebreaks allowed.
 	
   Make this fields available to all projects and type of issues desired. 
   
-  * These fields names MUST be stablished in adminstration/plugin/configuration.
+  These fields names MUST be stablished in adminstration/plugin/configuration.
   
 - In project configuration->modules set Portfolio on to activate a new project tab labeled "Portfolio"
 
