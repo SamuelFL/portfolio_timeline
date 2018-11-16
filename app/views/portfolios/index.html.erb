@@ -85,6 +85,7 @@
 	<% if @end!=""%>
 	  groups.add({id: <%= issue.id %>,
 		          content: '<span onclick="moveWindow(<%= @start.split(/(\d{4})\-(\d{1,2})\-(\d{1,2})/) %>)"><%= issue.subject %></span>',
+				  contentSortKey: '<%= issue.subject %>',
 				  subgroupOrder: function (a,b) {return a.subgroupOrder - b.subgroupOrder;},
 				  subgroupStack: {'<%= issue.id %>-line': true, '<%= issue.id %>-hitos': true},
 				  status: '<%= issue.status %>',
@@ -132,7 +133,7 @@
 									<div class="paddedTd max75">'+item.link+'</div>\
 									<div class="paddedTd max200">'+item.status+'</div>\
 									<div class="paddedTd max250" style="text-align:left;" >\
-										<a class="description">'+item.content+'</a>\
+										<a class="description">'+item.content+'\
 									</div>\
 								</div>';
 			return tableContent;
@@ -146,11 +147,12 @@
 	});
     timeline.setGroups(groups);
 	var width = document.getElementsByClassName('vis-labelset')[0].offsetWidth;
+	var sortCrit = ['id','status','contentSortKey'];
 	var layer = '<div id="pseudoTableHeaders">\
 					<div class="pseudoTable">\
-						<div class="paddedTd max75">ID</div>\
-						<div class="paddedTd max200">Estado</div>\
-						<div class="paddedTd max250">Descripción</div>\
+						<div class="paddedTd max75"><span onclick="sortBy(sortCrit[0])"><a>ID</a></span></div>\
+						<div class="paddedTd max200"><span onclick="sortBy(sortCrit[1])"><a>Estado</a></span></div>\
+						<div class="paddedTd max250"><span onclick="sortBy(sortCrit[2])"><a>Descripción</a></span></div>\
 					</div>';
 	$('.vis-timeline').first().prepend(layer);
 	$('#pseudoTableHeaders').width(width);

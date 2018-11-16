@@ -126,6 +126,13 @@ function thereIsSomethingVisible(groupContent){
 	}
 	return flag;
 }
+
+function sortBy(field){
+	var options = {
+	  groupOrder: field,
+	};
+	timeline.setOptions(options);
+}
 function zoomIn(){
 	timeline.zoomIn(0.85);
 }

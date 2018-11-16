@@ -82,7 +82,6 @@
   {
     background-color: rgba(246, 247, 248, 0.5);
   }
-  
   .vis-time-axis .vis-grid.vis-saturday, 
   .vis-time-axis .vis-grid.vis-sunday
   {
@@ -195,5 +194,12 @@
   #pseudoTableHeaders .paddedTd
   {
 	border:none;
-  } 
-  
+  }
+  #pseudoTableHeaders a
+  {
+    cursor: pointer;
+  }
+  .vis-panel.vis-background
+  {
+    pointer-events: none;
+  }
