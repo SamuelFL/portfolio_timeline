@@ -103,7 +103,6 @@
 				<% if !hito.blank? %>
 					<% hitoSplitted= hito.split(/\[(\d{4})\-(\d{1,2})\-(\d{1,2})\|(.*)\]/) %>
 					var hitoData = {start: '<%= hitoSplitted[1] %>-<%= hitoSplitted[2] %>-<%= hitoSplitted[3] %>',
-							content: '',
 							group: '<%= issue.id %>',
 							subgroup: '<%= issue.id %>-hitos',
 							subgroupOrder:2,
