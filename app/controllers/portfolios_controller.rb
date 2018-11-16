@@ -2,7 +2,7 @@ class PortfoliosController < ApplicationController
   def index
     @identifier = params[:id]
 	@project = Project.find_by identifier: @identifier
-	@issues = Issue.where(['project_id = ? and closed_on IS NULL', @project.id])
+	@issues = Issue.where(['project_id = ?', @project.id])
 	
 	@startString = Setting.plugin_portfolio_timeline['start_date']
 	@endString = Setting.plugin_portfolio_timeline['due_date']

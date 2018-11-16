@@ -72,63 +72,61 @@
 
 <div id="visualization"></div>
 <script type="text/javascript">
-  var statusPerTrackerArray = <%= raw @statusPerTrackerArray %>;
-  var container = document.getElementById('visualization');
-  var groups = new vis.DataSet();
-  var trackerFilteredGroups = new vis.DataSet();
+	var statusPerTrackerArray = <%= raw @statusPerTrackerArray %>;
+	var container = document.getElementById('visualization');
+	var groups = new vis.DataSet();
+	var trackerFilteredGroups = new vis.DataSet();
 
-  var items = new vis.DataSet();
-    <% @issues.each do |issue| %>
-	<% @start = issue.custom_field_value(@startDateID) %>
-	<% @end = issue.custom_field_value(@dueDateID) %>
-	<% if @start!=""%>
-	<% if @end!=""%>
-	  groups.add({id: <%= issue.id %>,
-		          content: '<span onclick="moveWindow(<%= @start.split(/(\d{4})\-(\d{1,2})\-(\d{1,2})/) %>)"><%= issue.subject %></span>',
-				  contentSortKey: '<%= issue.subject %>',
-				  subgroupOrder: function (a,b) {return a.subgroupOrder - b.subgroupOrder;},
-				  subgroupStack: {'<%= issue.id %>-line': true, '<%= issue.id %>-hitos': true},
-				  status: '<%= issue.status %>',
-				  visible: true,
-				  link: '<%= link_to_issue(issue, :subject => false, :tracker => false) %>',
-				  trackerId: '<%= issue.tracker_id%>'
+	var items = new vis.DataSet();
+	<% @issues.each do |issue| %>
+		<% @start = issue.custom_field_value(@startDateID) %>
+		<% @end = issue.custom_field_value(@dueDateID) %>
+		<% if @start!="" and @end!="" and !issue.closed? %>
+			groups.add({id: <%= issue.id %>,
+					content: '<span onclick="moveWindow(<%= @start.split(/(\d{4})\-(\d{1,2})\-(\d{1,2})/) %>)"><%= issue.subject %></span>',
+					contentSortKey: '<%= issue.subject %>',
+					subgroupOrder: function (a,b) {return a.subgroupOrder - b.subgroupOrder;},
+					subgroupStack: {'<%= issue.id %>-line': true, '<%= issue.id %>-hitos': true},
+					status: '<%= issue.status %>',
+					visible: true,
+					link: '<%= link_to_issue(issue, :subject => false, :tracker => false) %>',
+					trackerId: '<%= issue.tracker_id%>'
 					});
-	  var issueData = {
-	  content: '<div class="progress-wrapper">\
-							   <div class="progress" style="width:<%= issue.done_ratio %>%"></div>\
-							   <label class="progress-label"><%= issue.done_ratio %>%<label>\
-							 </div>',
-	  group: '<%= issue.id %>',
-	  subgroup:'<%= issue.id %>-line',
-	  subgroupOrder:1,
-	  title:'Fecha de inicio planificada: <%= @start %><br>Fecha de fin planificada: <%= @end %>',
-  	  start: '<%= @start %>',
-  	  end: '<%= @end %>'};
-	  items.add(issueData);
-	  <% @hitos = issue.custom_field_value(@hitosFieldID).split(/(\[\d{4}-\d{1,2}-\d{1,2}\|.*\])/) %>
-	  <% @hitos.each do |hito| %>
-	    <% if !hito.blank? %>
-	      <% hitoSplitted= hito.split(/\[(\d{4})\-(\d{1,2})\-(\d{1,2})\|(.*)\]/) %>
-		  var hitoData = {start: '<%= hitoSplitted[1] %>-<%= hitoSplitted[2] %>-<%= hitoSplitted[3] %>',
-			              content: '',
-			              group: '<%= issue.id %>',
-			              subgroup: '<%= issue.id %>-hitos',
-			              subgroupOrder:2,
-						  title: 'Fecha: <%= hitoSplitted[1] %>-<%= hitoSplitted[2] %>-<%= hitoSplitted[3] %><br>\
-								  <%= hitoSplitted[4] %>',
-			              type: 'point'};
-		  items.add(hitoData);
-	    <% end %>
-	  <% end %>
-	  <% end %>
-	  <% end %>
+			var issueData = {
+				content: '<div class="progress-wrapper">\
+							<div class="progress" style="width:<%= issue.done_ratio %>%"></div>\
+							<label class="progress-label"><%= issue.done_ratio %>%<label>\
+						  </div>',
+				group: '<%= issue.id %>',
+				subgroup:'<%= issue.id %>-line',
+				subgroupOrder:1,
+				title:'Fecha de inicio planificada: <%= @start %><br>Fecha de fin planificada: <%= @end %>',
+				start: '<%= @start %>',
+				end: '<%= @end %>'};
+				items.add(issueData);
+			<% @hitos = issue.custom_field_value(@hitosFieldID).split(/(\[\d{4}-\d{1,2}-\d{1,2}\|.*\])/) %>
+			<% @hitos.each do |hito| %>
+				<% if !hito.blank? %>
+					<% hitoSplitted= hito.split(/\[(\d{4})\-(\d{1,2})\-(\d{1,2})\|(.*)\]/) %>
+					var hitoData = {start: '<%= hitoSplitted[1] %>-<%= hitoSplitted[2] %>-<%= hitoSplitted[3] %>',
+							content: '',
+							group: '<%= issue.id %>',
+							subgroup: '<%= issue.id %>-hitos',
+							subgroupOrder:2,
+							title: 'Fecha: <%= hitoSplitted[1] %>-<%= hitoSplitted[2] %>-<%= hitoSplitted[3] %><br>\
+									<%= hitoSplitted[4] %>',
+							type: 'point'};
+					items.add(hitoData);
+				<% end %>
+			<% end %>
+		<% end %>
   	<% end %>
-
+	
     var options = {
-	  locale:'es',
-	  orientation: 'top',
-	  groupOrder: 'id',
-	  groupTemplate: 	function(item) {
+		locale:'es',
+		orientation: 'top',
+		groupOrder: 'id',
+		groupTemplate: 	function(item) {
 			var tableContent = '<div class="pseudoTable">\
 									<div class="paddedTd max75">'+item.link+'</div>\
 									<div class="paddedTd max200">'+item.status+'</div>\
