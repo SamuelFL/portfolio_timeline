@@ -70,12 +70,12 @@
 	var container = document.getElementById('visualization');
 	var groups = new vis.DataSet();
 	var trackerFilteredGroups = new vis.DataSet();
-
+	var today = new Date();
 	var items = new vis.DataSet();
 	<% @issues.each do |issue| %>
 		<% @start = issue.custom_field_value(@startDateID) %>
 		<% @end = issue.custom_field_value(@dueDateID) %>
-		<% if @start!="" and @end!="" and !issue.closed? %>
+		<% if !issue.closed? %>
 			groups.add({id: <%= issue.id %>,
 					content: '<span onclick="moveWindow(<%= @start.split(/(\d{4})\-(\d{1,2})\-(\d{1,2})/) %>)"><%= issue.subject %></span>',
 					contentSortKey: '<%= issue.subject %>',
@@ -86,18 +86,26 @@
 					link: '<%= link_to_issue(issue, :subject => false, :tracker => false) %>',
 					trackerId: '<%= issue.tracker_id%>'
 					});
-			var issueData = {
-				content: '<div class="progress-wrapper">\
-							<div class="progress" style="width:<%= issue.done_ratio %>%"></div>\
-							<label class="progress-label"><%= issue.done_ratio %>%<label>\
-						  </div>',
-				group: '<%= issue.id %>',
-				subgroup:'<%= issue.id %>-line',
-				subgroupOrder:1,
-				title:'Fecha de inicio planificada: <%= @start %><br>Fecha de fin planificada: <%= @end %>',
-				start: '<%= @start %>',
-				end: '<%= @end %>'};
+			<% if @start!="" and @end!="" %>
+				var currentIssueEndDate =new Date('<%= @end %>T00:00:00Z');
+				var rangeColor = '#90a3cc';
+				if(today > currentIssueEndDate && <%= issue.done_ratio %> < 100){
+					rangeColor = '#dd2200';
+				}
+				var issueData = {
+					content: '<div class="progress-wrapper" style="background:'+ rangeColor +';">\
+								<div class="progress" style="width:<%= issue.done_ratio %>%">\
+								<label class="progress-label"><%= issue.done_ratio %>%<label></div>\
+							</div>',
+					group: '<%= issue.id %>',
+					subgroup:'<%= issue.id %>-line',
+					subgroupOrder:1,
+					title:'Fecha de inicio planificada: <%= @start %><br>Fecha de fin planificada: <%= @end %>',
+					
+					start: '<%= @start %>',
+					end: '<%= @end %>'};
 				items.add(issueData);
+			<% end %>
 			<% @hitos = issue.custom_field_value(@hitosFieldID).split(/(\[\d{4}-\d{1,2}-\d{1,2}\|.*\])/) %>
 			<% @hitos.each do |hito| %>
 				<% if !hito.blank? %>

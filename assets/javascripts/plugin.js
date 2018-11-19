@@ -1,7 +1,7 @@
 function updateElement(element){
 	switch(element){
 		case "progressBar":
-			var elementArray= document.getElementsByClassName('progress-wrapper');
+			var elementArray= document.getElementsByClassName('progress');
 			var checkBox = document.getElementById('progressBarCheckbox');
 			break;
 		case "hitos":
@@ -23,7 +23,7 @@ function hideElement(elementArray){
 }
 function showElement(elementArray){
 	for (var i=0; i<elementArray.length;i++){
-		elementArray[i].style.display='inline-block';
+		elementArray[i].style.display='block';
 	}
 }
 
@@ -79,7 +79,7 @@ function applyStatusFilter(){
 	}else{
 		var items = groups.get();
 	}
-	if(statuses.includes("all")){
+	if(includes(statuses,"all")){
 		if(trackerFilteredGroups.length > 0){
 			timeline.setGroups(trackerFilteredGroups);
 		}else{
@@ -87,7 +87,7 @@ function applyStatusFilter(){
 		}
 	}else{
 		for(var i=0;i<items.length;i++){
-			if(!statuses.includes(items[i].status)){
+			if(!includes(statuses,items[i].status)){
 				items[i].visible= false;
 			}
 		}
@@ -138,4 +138,14 @@ function zoomIn(){
 }
 function zoomOut(){
 	timeline.zoomOut(0.85);
+}
+
+//IExplorer support
+function includes(container, value) {
+	var returnValue = false;
+	var pos = container.indexOf(value);
+	if (pos >= 0) {
+		returnValue = true;
+	}
+	return returnValue;
 }
