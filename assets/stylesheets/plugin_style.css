@@ -45,6 +45,10 @@
   {
     width: 150px
   }
+  .other-formats
+  {
+	cursor: pointer;
+  }
 
   /*Zoom button*/
   .iconButton

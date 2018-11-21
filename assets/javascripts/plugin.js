@@ -149,3 +149,12 @@ function includes(container, value) {
 	}
 	return returnValue;
 }
+
+function visToCanvas(){
+
+	html2canvas(document.getElementById("visualization")).then(function(canvas) {
+		var img = canvas.toDataURL("image/png");
+		window.open(img);
+	});
+}
+

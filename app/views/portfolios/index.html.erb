@@ -6,6 +6,7 @@
 	<%= javascript_include_tag 'vis', :plugin => 'portfolio_timeline' %>
 	<%= stylesheet_link_tag 'plugin_style', :plugin => 'portfolio_timeline' %>
 	<%= javascript_include_tag 'plugin', :plugin => 'portfolio_timeline' %>
+	<%= javascript_include_tag 'html2canvas', :plugin => 'portfolio_timeline' %>
 
 <% end %>
 
@@ -29,7 +30,7 @@
 			</div>
 			<div class="filterItem">
 				<div>
-					<select id="statusSelector" onchange="applyStatusFilter()" autocomplete="off" multiple size ="3">
+					<select id="statusSelector" onchange="applyStatusFilter()" autocomplete="off" multiple size ="5">
 						<option selected value="all">Todos</option>
 						<% @statuses.each do |status| %>
 							<option value="<%= status.name %>"><%= status.name %></option>
@@ -64,7 +65,12 @@
 	</button>
 </div>
 
+
 <div id="visualization"></div>
+<p class="other-formats">
+	Exportar a:  
+	<span onclick="visToCanvas()"><a>PNG</a></span>
+</p>
 <script type="text/javascript">
 	var statusPerTrackerArray = <%= raw @statusPerTrackerArray %>;
 	var container = document.getElementById('visualization');
