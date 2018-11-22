@@ -54,11 +54,10 @@ function zoomOut(){
 	timeline.zoomOut(0.85);
 }
 function visToCanvas(){
-	html2canvas(document.getElementById("visualization")).then(canvasToImg(canvas));
-}
-function canvasToImg(canvas){
-	var img = canvas.toDataURL("image/png");
-	window.open(img);
+	html2canvas(document.getElementById("visualization")).then(function(canvas){
+																	var img = canvas.toDataURL("image/png");
+																	window.open(img);
+																	});
 }
 //Filter functions
 function applyTrackerFilter(){
