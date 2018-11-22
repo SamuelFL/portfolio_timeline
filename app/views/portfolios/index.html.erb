@@ -14,12 +14,9 @@
 	<legend onclick="toggleFieldset(this);">Filtros</legend>
 	<div id="filterBox" style="display:none;">
 		<div class="filterContainer">
-			<div class="filterItem">Tipo:</div>
-			<div class="filterItem">Estado:</div>
-		</div>
-		<div class="filterContainer">
 			<div class="filterItem">
-				<div>
+				<div class="filterLabel">Tipo:</div>
+				<div class="filterSelect">
 					<select id="trackerSelector" onchange="applyTrackerFilter()" autocomplete="off">
 						<option selected value=0>Todos</option>
 						<% @trackers.each do |tracker| %>
@@ -29,7 +26,19 @@
 				</div>	
 			</div>
 			<div class="filterItem">
-				<div>
+				<div class="filterLabel">Asignado a:</div>
+				<div class="filterSelect">
+					<select id="attendantSelector" onchange="applyAttendantFilter()" autocomplete="off">
+						<option selected value="all">Todos</option>
+						<% @attendants.each do |attendant| %>
+							<option value="<%= attendant.id %>"><%= attendant.firstname + " " + attendant.lastname %></option>
+						<% end %>
+					</select>
+				</div>
+			</div>
+			<div class="filterItem">
+				<div class="filterLabel">Estado:</div>
+				<div class="filterSelect">
 					<select id="statusSelector" onchange="applyStatusFilter()" autocomplete="off" multiple size ="5">
 						<option selected value="all">Todos</option>
 						<% @statuses.each do |status| %>
@@ -75,7 +84,6 @@
 	var statusPerTrackerArray = <%= raw @statusPerTrackerArray %>;
 	var container = document.getElementById('visualization');
 	var groups = new vis.DataSet();
-	var trackerFilteredGroups = new vis.DataSet();
 	var today = new Date();
 	var items = new vis.DataSet();
 	<% @issues.each do |issue| %>
@@ -90,6 +98,7 @@
 					status: '<%= issue.status %>',
 					visible: true,
 					link: '<%= link_to_issue(issue, :subject => false, :tracker => false) %>',
+					assigned_to_id: '<%= issue.assigned_to_id %>',
 					trackerId: '<%= issue.tracker_id%>'
 					});
 			<% if @start!="" and @end!="" %>
@@ -150,6 +159,11 @@
 		updateElement("progressBar");
 		updateElement("hitos");
 	});
+	
+	var trackerFilteredGroups = new vis.DataSet();
+	var attendantFilteredGroups = new vis.DataSet();
+	trackerFilteredGroups.add(groups.get());
+	attendantFilteredGroups.add(groups.get());
     timeline.setGroups(groups);
 
 	var width = document.getElementsByClassName('vis-labelset')[0].offsetWidth;

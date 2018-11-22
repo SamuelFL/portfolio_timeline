@@ -12,11 +12,11 @@ class PortfoliosController < ApplicationController
 	
 	@hitosFieldID = CustomField.select('id').find_by name: Setting.plugin_portfolio_timeline['hitos']
 	
+	@attendants = User.where(['type = ?','User'])
 	
-	
-	@trackers= Tracker.all
-	@statuses= IssueStatus.where(['is_closed = ?', false])
-	@nonClosedStatuses =Array.new
+	@trackers = Tracker.all
+	@statuses = IssueStatus.where(['is_closed = ?', false])
+	@nonClosedStatuses = Array.new
 	
 	@statuses.each do |status|
 		@nonClosedStatuses.insert(status.id,status.name)
@@ -24,7 +24,7 @@ class PortfoliosController < ApplicationController
 	
 	
 	@size = Tracker.maximum('id')
-	@statusPerTrackerArray= Array.new(@size,0)
+	@statusPerTrackerArray = Array.new(@size,0)
 	
 	@trackers.each do |tracker|
 		@trackerStatuses = WorkflowTransition.select('new_status_id').distinct.where(['tracker_id = ?',tracker.id])
@@ -36,7 +36,7 @@ class PortfoliosController < ApplicationController
 		@statusPerTrackerArray.insert(tracker.id,@statusesArrayAux.compact)
 	end
 	
-	@statusPerTrackerArray[0]= @nonClosedStatuses.compact
+	@statusPerTrackerArray[0] = @nonClosedStatuses.compact
 	
   end
 end

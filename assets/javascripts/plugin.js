@@ -1,3 +1,8 @@
+//Timeline functions
+function updateAllElements(){
+	updateElement("progressBar");
+	updateElement("hitos");
+}
 function updateElement(element){
 	switch(element){
 		case "progressBar":
@@ -26,7 +31,12 @@ function showElement(elementArray){
 		elementArray[i].style.display='block';
 	}
 }
-
+function sortBy(field){
+	var options = {
+	  groupOrder: field,
+	};
+	timeline.setOptions(options);
+}
 function moveWindow(startArray){
 	var range = timeline.getWindow();
     var interval = range.end - range.start;
@@ -37,7 +47,20 @@ function moveWindow(startArray){
             end:  endDate
         });
 }
-
+function zoomIn(){
+	timeline.zoomIn(0.85);
+}
+function zoomOut(){
+	timeline.zoomOut(0.85);
+}
+function visToCanvas(){
+	html2canvas(document.getElementById("visualization")).then(canvasToImg(canvas));
+}
+function canvasToImg(canvas){
+	var img = canvas.toDataURL("image/png");
+	window.open(img);
+}
+//Filter functions
 function applyTrackerFilter(){
 	var selector = document.getElementById('trackerSelector');
 	var tracker = selector.options[selector.selectedIndex].value;
@@ -50,16 +73,56 @@ function applyTrackerFilter(){
 			}
 		}
 		trackerFilteredGroups.add(items);
-		timeline.setGroups(trackerFilteredGroups);
-		fillEmptyTimeline(trackerFilteredGroups);
 	}else{
-		timeline.setGroups(groups);
+		trackerFilteredGroups.add(groups.get());
 	}
+	timeline.setGroups(trackerFilteredGroups);
+	fillIfEmptyTimeline(trackerFilteredGroups);
 	setStatusSelectorOptions(tracker);
-	document.getElementById('statusSelector').value="";
-	updateElement("progressBar");
-	updateElement("hitos");
+	document.getElementById('statusSelector').value="all";
+	document.getElementById('attendantSelector').value="all";
+	updateAllElements();
 }
+function applyAttendantFilter(){
+	var attendant = $('#attendantSelector').val();
+	var items = trackerFilteredGroups.get();
+	
+	if(attendant == "all"){
+		timeline.setGroups(trackerFilteredGroups);
+	}else{
+		for(var i=0;i<items.length;i++){
+			if(items[i].assigned_to_id != attendant){
+				items[i].visible= false;
+			}
+		}
+		attendantFilteredGroups.clear();
+		attendantFilteredGroups.add(items);
+		timeline.setGroups(attendantFilteredGroups);
+	}
+	document.getElementById('statusSelector').value="all";
+	fillIfEmptyTimeline(attendantFilteredGroups);
+	updateAllElements();
+}
+function applyStatusFilter(){
+	var statuses = $('#statusSelector').val();
+	var items = attendantFilteredGroups.get();
+	
+	if(includes(statuses,"all")){
+		timeline.setGroups(attendantFilteredGroups);
+	}else{
+		for(var i=0;i<items.length;i++){
+			if(!includes(statuses,items[i].status)){
+				items[i].visible= false;
+			}
+		}
+		var statusFilteredGroups = new vis.DataSet();
+		statusFilteredGroups.add(items);
+		timeline.setGroups(statusFilteredGroups);
+	}
+	fillIfEmptyTimeline(statusFilteredGroups);
+	updateAllElements();
+}
+
 function setStatusSelectorOptions(trackerId){
 	var currentTrackerArray = statusPerTrackerArray[trackerId];
 	var optionsAsString = "";
@@ -71,37 +134,8 @@ function setStatusSelectorOptions(trackerId){
 	}
 	$("select[id='statusSelector']").find('option').remove().end().append($(optionsAsString));
 }
-function applyStatusFilter(){
-	var statuses = $('#statusSelector').val();
-	
-	if(trackerFilteredGroups.length > 0){
-		var items = trackerFilteredGroups.get();
-	}else{
-		var items = groups.get();
-	}
-	if(includes(statuses,"all")){
-		if(trackerFilteredGroups.length > 0){
-			timeline.setGroups(trackerFilteredGroups);
-		}else{
-			timeline.setGroups(groups);
-		}
-	}else{
-		for(var i=0;i<items.length;i++){
-			if(!includes(statuses,items[i].status)){
-				items[i].visible= false;
-			}
-		}
-		var statusFilteredGroups = new vis.DataSet();
-		statusFilteredGroups.add(items);
-		timeline.setGroups(statusFilteredGroups);
-		fillEmptyTimeline(statusFilteredGroups);
-	}
-	updateElement("progressBar");
-	updateElement("hitos");
-}
-
-function fillEmptyTimeline(group){
-	var groupContent =group.get();
+function fillIfEmptyTimeline(group){
+	var groupContent = group.get();
 	var emptyItem = {id: 0,
 		          content: '',
 				  subgroupOrder: function (a,b) {return a.subgroupOrder - b.subgroupOrder;},
@@ -127,19 +161,6 @@ function thereIsSomethingVisible(groupContent){
 	return flag;
 }
 
-function sortBy(field){
-	var options = {
-	  groupOrder: field,
-	};
-	timeline.setOptions(options);
-}
-function zoomIn(){
-	timeline.zoomIn(0.85);
-}
-function zoomOut(){
-	timeline.zoomOut(0.85);
-}
-
 //IExplorer support
 function includes(container, value) {
 	var returnValue = false;
@@ -149,12 +170,3 @@ function includes(container, value) {
 	}
 	return returnValue;
 }
-
-function visToCanvas(){
-
-	html2canvas(document.getElementById("visualization")).then(function(canvas) {
-		var img = canvas.toDataURL("image/png");
-		window.open(img);
-	});
-}
-

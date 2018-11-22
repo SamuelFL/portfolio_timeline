@@ -1,26 +1,21 @@
   /*Options menu*/
-  #filterBox
-  {
-    display:flex;
-    margin: 10px 0 0 0;
-  }
   .filterContainer
   {
-    display:flex;
+	display:flex;
 	flex-direction: column;
-  }
-  .filterContainer + .filterContainer
-  {
-	margin-left: 100px;
+	max-width: 500px;
   }
   .filterItem
   {
-    display:flex;
-    justify-content:flex-start; 
+	overflow: auto;
   }
-  .filterItem div
+  .filterLabel
   {
-    margin: 0 10px;
+	float: left;
+  }
+  .filterSelect
+  {
+	float:right;
   }
   .optItem
   {

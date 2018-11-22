@@ -2,7 +2,7 @@
 
 Developed by SamuelFL at Inerza S.A. (http://inerza.com/)
 = Description
-V 1.1.1
+V 1.1.2
 
 Remine plugin for portfolio management.
 Uses vis.js  (http://visjs.org/) to display a timeline of issues alongside some milestones attached as custom fields 	----- MIT Licensed
