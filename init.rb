@@ -2,7 +2,7 @@ Redmine::Plugin.register :portfolio_timeline do
   name 'Portfolio Timeline plugin'
   author 'SamuelFL (http://inerza.com/)'
   description 'Redmine plugin for portfolio management'
-  version '1.1.2'
+  version '1.2.0'
   project_module :portfolio do
     permission :view_portfolios, :portfolios => :index
   end
@@ -11,7 +11,10 @@ Redmine::Plugin.register :portfolio_timeline do
   settings :default => {
     :start_date => "Fecha de inicio planificada",
 	:due_date    => "Fecha de fin planificada",
-	:hitos        => "Hitos planificados"
+	:hitos        => "Hitos planificados",
+	:customField1 => "Sin configurar",
+	:customField2 => "Sin configurar",
+	:customField3 => "Sin configurar",
 	}, :partial => 'settings/portfolio_timeline_settings'
   
 end

@@ -2,11 +2,14 @@
 
 Developed by SamuelFL at Inerza S.A. (http://inerza.com/)
 = Description
-V 1.1.2
+V 1.2.0
 
 Remine plugin for portfolio management.
-Uses vis.js  (http://visjs.org/) to display a timeline of issues alongside some milestones attached as custom fields 	----- MIT Licensed
-Uses html2canvas (https://html2canvas.hertzen.com/) to export timeline to png 											----- MIT Licensed
+
+- Uses vis.js  (http://visjs.org/) to display a timeline of issues alongside some milestones attached as custom fields 	    ----- MIT Licensed
+
+- Uses html2canvas (https://html2canvas.hertzen.com/) to export timeline to png 											----- MIT Licensed
+
 = Installation notes
 
 - Copy or clone repository to /plugins/ of your redmine installation

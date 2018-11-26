@@ -2,6 +2,7 @@
 function updateAllElements(){
 	updateElement("progressBar");
 	updateElement("hitos");
+	setCustomColumn();
 }
 function updateElement(element){
 	switch(element){
@@ -59,21 +60,52 @@ function visToCanvas(){
 																	window.open(img);
 																	});
 }
+
+function setCustomColumn(){
+	var field = $('#customFieldSelector').val();
+	switch(field){
+		case "":
+			$('.customField1').css('display','none');
+			$('.customField2').css('display','none');
+			$('.customField3').css('display','none');
+			$('.customColumnHeader').css('display','none');
+			break;
+		case "customField1":
+			$('.customField1').css('display','block');
+			$('.customField2').css('display','none');
+			$('.customField3').css('display','none');
+			$('.customColumnHeader').css('display','block');
+			break;
+		case "customField2":
+			$('.customField1').css('display','none');
+			$('.customField2').css('display','block');
+			$('.customField3').css('display','none');
+			$('.customColumnHeader').css('display','block');
+			break;
+		case "customField3":
+			$('.customField1').css('display','none');
+			$('.customField2').css('display','none');
+			$('.customField3').css('display','block');
+			$('.customColumnHeader').css('display','block');
+			break;
+	}
+	sortBy(field);
+}
+
 //Filter functions
 function applyTrackerFilter(){
-	var selector = document.getElementById('trackerSelector');
-	var tracker = selector.options[selector.selectedIndex].value;
+	var tracker = $('#trackerSelector').val();
 	var items = groups.get();
 	trackerFilteredGroups.clear();
-	if(tracker != 0){
+	if(tracker == 0){
+		trackerFilteredGroups.add(groups.get());
+	}else{
 		for(var i=0;i<items.length;i++){
 			if(items[i].trackerId != tracker){
 				items[i].visible= false;
 			}
 		}
 		trackerFilteredGroups.add(items);
-	}else{
-		trackerFilteredGroups.add(groups.get());
 	}
 	timeline.setGroups(trackerFilteredGroups);
 	fillIfEmptyTimeline(trackerFilteredGroups);
@@ -85,19 +117,18 @@ function applyTrackerFilter(){
 function applyAttendantFilter(){
 	var attendant = $('#attendantSelector').val();
 	var items = trackerFilteredGroups.get();
-	
+	attendantFilteredGroups.clear();
 	if(attendant == "all"){
-		timeline.setGroups(trackerFilteredGroups);
+		attendantFilteredGroups.add(trackerFilteredGroups.get());
 	}else{
 		for(var i=0;i<items.length;i++){
 			if(items[i].assigned_to_id != attendant){
 				items[i].visible= false;
 			}
 		}
-		attendantFilteredGroups.clear();
 		attendantFilteredGroups.add(items);
-		timeline.setGroups(attendantFilteredGroups);
 	}
+	timeline.setGroups(attendantFilteredGroups);
 	document.getElementById('statusSelector').value="all";
 	fillIfEmptyTimeline(attendantFilteredGroups);
 	updateAllElements();
@@ -105,19 +136,19 @@ function applyAttendantFilter(){
 function applyStatusFilter(){
 	var statuses = $('#statusSelector').val();
 	var items = attendantFilteredGroups.get();
+	var statusFilteredGroups = new vis.DataSet();
 	
 	if(includes(statuses,"all")){
-		timeline.setGroups(attendantFilteredGroups);
+		statusFilteredGroups.add(attendantFilteredGroups.get())
 	}else{
 		for(var i=0;i<items.length;i++){
 			if(!includes(statuses,items[i].status)){
 				items[i].visible= false;
 			}
 		}
-		var statusFilteredGroups = new vis.DataSet();
 		statusFilteredGroups.add(items);
-		timeline.setGroups(statusFilteredGroups);
 	}
+	timeline.setGroups(statusFilteredGroups);
 	fillIfEmptyTimeline(statusFilteredGroups);
 	updateAllElements();
 }
@@ -140,10 +171,13 @@ function fillIfEmptyTimeline(group){
 				  subgroupOrder: function (a,b) {return a.subgroupOrder - b.subgroupOrder;},
 				  status: '',
 				  link: '',
-				  trackerId: ''
+				  trackerId: '',
+				  customField1: '',
+				  customField2: '',
+				  customField3: ''
 					};
+	group.remove(0);
 	if(thereIsSomethingVisible(groupContent)){
-		group.remove(0);
 		timeline.setGroups(group);
 	}else{
 		group.add(emptyItem);

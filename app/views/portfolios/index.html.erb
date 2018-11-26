@@ -54,6 +54,15 @@
 	<legend onclick="toggleFieldset(this);">Opciones</legend>
 	<div id="optBox" style="display:none;">
 		<div class="optItem">
+			Columna personalizada:
+			<select id="customFieldSelector" onchange="updateAllElements()" autocomplete="off">
+				<option selected value="">Ninguna</option>
+				<option value="customField1"><%= @customField1Name %></option>
+				<option value="customField2"><%= @customField2Name %></option>
+				<option value="customField3"><%= @customField3Name %></option>
+			</select>
+		</div>
+		<div class="optItem">
 			Mostrar:
 			<input type="checkbox" onclick="updateElement('hitos')" id="hitosCheckbox" autocomplete="off">Hitos
 			<input type="checkbox" onclick="updateElement('progressBar')" id="progressBarCheckbox" autocomplete="off">Indicador de progreso
@@ -89,6 +98,9 @@
 	<% @issues.each do |issue| %>
 		<% @start = issue.custom_field_value(@startDateID) %>
 		<% @end = issue.custom_field_value(@dueDateID) %>
+		<% @customField1 = issue.custom_field_value(@customField1ID) %>
+		<% @customField2 = issue.custom_field_value(@customField2ID) %>
+		<% @customField3 = issue.custom_field_value(@customField3ID) %>
 		<% if !issue.closed? %>
 			groups.add({id: <%= issue.id %>,
 					content: '<span onclick="moveWindow(<%= @start.split(/(\d{4})\-(\d{1,2})\-(\d{1,2})/) %>)"><%= issue.subject %></span>',
@@ -96,9 +108,13 @@
 					subgroupOrder: function (a,b) {return a.subgroupOrder - b.subgroupOrder;},
 					subgroupStack: {'<%= issue.id %>-line': true, '<%= issue.id %>-hitos': true},
 					status: '<%= issue.status %>',
+					statusPos: '<%= issue.status.position %>',
 					visible: true,
 					link: '<%= link_to_issue(issue, :subject => false, :tracker => false) %>',
 					assigned_to_id: '<%= issue.assigned_to_id %>',
+					customField1: `<%= @customField1 %>`,
+					customField2: `<%= @customField2 %>`,
+					customField3: `<%= @customField3 %>`,
 					trackerId: '<%= issue.tracker_id%>'
 					});
 			<% if @start!="" and @end!="" %>
@@ -116,7 +132,6 @@
 					subgroup:'<%= issue.id %>-line',
 					subgroupOrder:1,
 					title:'Fecha de inicio planificada: <%= @start %><br>Fecha de fin planificada: <%= @end %>',
-					
 					start: '<%= @start %>',
 					end: '<%= @end %>'};
 				items.add(issueData);
@@ -144,8 +159,11 @@
 		groupOrder: 'id',
 		groupTemplate: 	function(item) {
 			var tableContent = '<div class="pseudoTable">\
+									<div class="paddedTd max150 customField1" style="display:none;">'+item.customField1+'</div>\
+									<div class="paddedTd max150 customField2" style="display:none;">'+item.customField2+'</div>\
+									<div class="paddedTd max150 customField3" style="display:none;">'+item.customField3+'</div>\
 									<div class="paddedTd max75">'+item.link+'</div>\
-									<div class="paddedTd max200">'+item.status+'</div>\
+									<div class="paddedTd max150">'+item.status+'</div>\
 									<div class="paddedTd max250" style="text-align:left;" >\
 										<a class="description">'+item.content+'\
 									</div>\
@@ -167,11 +185,12 @@
     timeline.setGroups(groups);
 
 	var width = document.getElementsByClassName('vis-labelset')[0].offsetWidth;
-	var sortCrit = ['id','status','contentSortKey'];
+	var sortCrit = ['id','statusPos','contentSortKey'];
 	var layer = '<div id="pseudoTableHeaders">\
 					<div class="pseudoTable">\
+						<div class="paddedTd max150 customColumnHeader">Columna Personalizada</div>\
 						<div class="paddedTd max75"><span onclick="sortBy(sortCrit[0])"><a>ID</a></span></div>\
-						<div class="paddedTd max200"><span onclick="sortBy(sortCrit[1])"><a>Estado</a></span></div>\
+						<div class="paddedTd max150"><span onclick="sortBy(sortCrit[1])"><a>Estado</a></span></div>\
 						<div class="paddedTd max250"><span onclick="sortBy(sortCrit[2])"><a>Descripción</a></span></div>\
 					</div>';
 	$('.vis-timeline').first().prepend(layer);

@@ -2,53 +2,113 @@
 <% @currentStartDate = Setting.plugin_portfolio_timeline['start_date'] %>
 <% @currentDueDate = Setting.plugin_portfolio_timeline['due_date'] %>
 <% @currentHitos = Setting.plugin_portfolio_timeline['hitos'] %>
-
-<table>
-  <tbody>
-    <tr>
-      <th>Nombre del campo para fecha de inicio planificada</th>
-      <td>
-		<select id="start_date" name="settings[start_date]">
-			<% @cfNames.each do |cfName| %>
-				<option <% if(cfName.name==@currentStartDate) %>
-							<%= 'selected' %>
+<% @currentCustomField1 = Setting.plugin_portfolio_timeline['customField1'] %>
+<% @currentCustomField2 = Setting.plugin_portfolio_timeline['customField2'] %>
+<% @currentCustomField3 = Setting.plugin_portfolio_timeline['customField3'] %>
+<fieldset>
+<legend>Campos personalizados para muestra de datos en la línea de tiempo:</legend>
+	<table>
+		<tbody>
+			<tr>
+				<th>Nombre del campo para fecha de inicio planificada</th>
+				<td>
+					<select id="start_date" name="settings[start_date]">
+						<% @cfNames.each do |cfName| %>
+							<option <% if(cfName.name==@currentStartDate) %>
+										<%= 'selected' %>
+									<% end %>
+									value="<%= cfName.name %>">
+									<%= cfName.name %>
+							</option>
 						<% end %>
-						value="<%= cfName.name %>">
-						<%= cfName.name %>
-				</option>
-			<% end %>
-		</select>
-      </td>
-    </tr>
-	<tr>
-      <th>Nombre del campo para fecha de fin planificada</th>
-      <td>
-	    <select id="due_date" name="settings[due_date]">
-			<% @cfNames.each do |cfName| %>
-				<option <% if(cfName.name==@currentDueDate) %>
-							<%= 'selected' %>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<th>Nombre del campo para fecha de fin planificada</th>
+				<td>
+					<select id="due_date" name="settings[due_date]">
+						<% @cfNames.each do |cfName| %>
+							<option <% if(cfName.name==@currentDueDate) %>
+										<%= 'selected' %>
+									<% end %>
+									value="<%= cfName.name %>">
+									<%= cfName.name %>
+							</option>
 						<% end %>
-						value="<%= cfName.name %>">
-						<%= cfName.name %>
-				</option>
-			<% end %>
-		</select>
-      </td>
-    </tr>
-	<tr>
-      <th>Nombre del campo para hitos planificados</th>
-      <td>
-	    <select id="hitos" name="settings[hitos]">
-			<% @cfNames.each do |cfName| %>
-				<option <% if(cfName.name==@currentHitos) %>
-							<%= 'selected' %>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<th>Nombre del campo para hitos planificados</th>
+				<td>
+					<select id="hitos" name="settings[hitos]">
+						<% @cfNames.each do |cfName| %>
+							<option <% if(cfName.name==@currentHitos) %>
+										<%= 'selected' %>
+									<% end %>
+									value="<%= cfName.name %>">
+									<%= cfName.name %>
+							</option>
 						<% end %>
-						value="<%= cfName.name %>">
-						<%= cfName.name %>
-				</option>
-			<% end %>
-		</select>
-      </td>
-    </tr>
-  </tbody>
-</table>
+					</select>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</fieldset>
+<fieldset>
+<legend>Campos personalizados para columna personalizable:</legend>
+	<table>
+		<tbody>
+			<tr>
+				<th>Campo personalizado 1</th>
+				<td>
+					<select id="customField1" name="settings[customField1]">
+						<option selected value="Sin configurar">Sin configurar</option>
+						<% @cfNames.each do |cfName| %>
+							<option <% if(cfName.name==@currentCustomField1) %>
+										<%= 'selected' %>
+									<% end %>
+									value="<%= cfName.name %>">
+									<%= cfName.name %>
+							</option>
+						<% end %>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<th>Campo personalizado 2</th>
+				<td>
+					<select id="customField2" name="settings[customField2]">
+						<option selected value="Sin configurar">Sin configurar</option>
+						<% @cfNames.each do |cfName| %>
+							<option <% if(cfName.name==@currentCustomField2) %>
+										<%= 'selected' %>
+									<% end %>
+									value="<%= cfName.name %>">
+									<%= cfName.name %>
+							</option>
+						<% end %>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<th>Campo personalizado 3</th>
+				<td>
+					<select id="customField3" name="settings[customField3]">
+					<option selected value="Sin configurar">Sin configurar</option>
+						<% @cfNames.each do |cfName| %>
+							<option <% if(cfName.name==@currentCustomField3) %>
+										<%= 'selected' %>
+									<% end %>
+									value="<%= cfName.name %>">
+									<%= cfName.name %>
+							</option>
+						<% end %>
+					</select>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</fieldset>

@@ -23,7 +23,7 @@
     display:flex;
     justify-content:left;
   }
-  .optItem input
+  .optItem *
   {
     margin:0 10px;
   }
@@ -174,13 +174,17 @@
   {
 	width: 250px;
   }
-  .max200
+  .max150
   {
-	width: 200px;
+	width: 150px;
   }
   .max75
   {
 	width: 75px;  
+  }
+  .paddedTd
+  {
+	word-wrap: break-word;
   }
   #pseudoTableHeaders
   {
@@ -202,4 +206,8 @@
   .vis-panel.vis-background
   {
     pointer-events: none;
+  }
+  .customColumnHeader
+  {
+	display: none;
   }

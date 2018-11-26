@@ -12,6 +12,15 @@ class PortfoliosController < ApplicationController
 	
 	@hitosFieldID = CustomField.select('id').find_by name: Setting.plugin_portfolio_timeline['hitos']
 	
+
+	@customField1Name = Setting.plugin_portfolio_timeline['customField1']
+	@customField2Name = Setting.plugin_portfolio_timeline['customField2']
+	@customField3Name = Setting.plugin_portfolio_timeline['customField3']
+	
+	@customField1ID = CustomField.select('id').find_by name: Setting.plugin_portfolio_timeline['customField1']
+	@customField2ID = CustomField.select('id').find_by name: Setting.plugin_portfolio_timeline['customField2']
+	@customField3ID = CustomField.select('id').find_by name: Setting.plugin_portfolio_timeline['customField3']
+	
 	@attendants = User.where(['type = ?','User'])
 	
 	@trackers = Tracker.all
