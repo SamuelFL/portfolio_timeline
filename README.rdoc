@@ -2,7 +2,7 @@
 
 Developed by SamuelFL at Inerza S.A. (http://inerza.com/)
 = Description
-V 1.2.0
+V 2.0.0
 
 Remine plugin for portfolio management.
 
@@ -21,9 +21,12 @@ Remine plugin for portfolio management.
 	
   The input format is [YYYY-MM-DD|textAsLongAsLongTextPermits] [YYYY-MM-DD|textAsLongAsLongTextPermits2] [...] linebreaks allowed.
 	
-  Make this fields available to all projects and type of issues desired. 
+  Make this fields available to all projects and issue trackers. ELSE A SERVER ERROR WILL PROMPT. 
   
   These fields names MUST be stablished in adminstration/plugin/configuration.
+  
+  A tracker named 'Demanda de nuevo desarrollo' must be defined to items table. This table will show the following relation of issue trackers
+  -Demanda de nuevo desarrollo->'blocked by'->Petición de servicio->'blocked by'->Hitoria de usuario->'parent task of'->Tarea de desarrollo.
   
 - In project configuration->modules set Portfolio on to activate a new project tab labeled "Portfolio"
 

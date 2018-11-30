@@ -89,6 +89,7 @@
   {
     background: #d3d3d3;
   }
+  
   /*Timeline items*/
   .vis-point
   {
@@ -112,9 +113,8 @@
     -o-transform: rotate(45deg);
     transform: rotate(45deg);
   }
-
-  /*Progress Bars*/
   
+  /*Progress Bars*/
   .vis-item .vis-item-content 
   {
     padding:0px;
@@ -210,4 +210,41 @@
   .customColumnHeader
   {
 	display: none;
+  }
+  
+  /*Items table*/
+  #itemsTable
+  {
+	width:100%;
+    border: 1px solid #e4e4e4;
+    border-collapse: collapse;
+    text-align: center;
+  }
+  #itemsTable th
+  {
+    background-color: #EEEEEE;
+  }
+  #itemsTable tr
+  {
+    border: 1px solid #e4e4e4;
+  }
+  #itemsTable tr.white
+  {
+    background-color: #ffffff;
+  }
+  #itemsTable tr.hidden
+  {
+	display: none;
+  }
+  #itemsTable tr.ps
+  {
+	background-color: #f9f9f9;
+  }
+  #itemsTable tr.hu
+  {
+	background-color: #f4f4f4;
+  }
+  #itemsTable tr.td
+  {
+	background-color: #efefef;
   }

@@ -54,9 +54,9 @@
 	<legend onclick="toggleFieldset(this);">Opciones</legend>
 	<div id="optBox" style="display:none;">
 		<div class="optItem">
-			Columna personalizada:
+			Agrupar resultados por:
 			<select id="customFieldSelector" onchange="updateAllElements()" autocomplete="off">
-				<option selected value="">Ninguna</option>
+				<option selected value=""></option>
 				<option value="customField1"><%= @customField1Name %></option>
 				<option value="customField2"><%= @customField2Name %></option>
 				<option value="customField3"><%= @customField3Name %></option>
@@ -70,25 +70,150 @@
 	</div>
 </fieldset>
 
-<div id="zoomSection">
-	<button class="styledButton" id="zoomInButton" onclick="zoomIn()">
-		<div class=iconButton>
-			<%= image_tag('zoom_in.png', :plugin => 'portfolio_timeline') %>
+<fieldset class="collapsible">
+	<legend onclick="toggleFieldset(this);timeline.redraw();">Timeline</legend>
+	<div style="">
+		<div id="zoomSection">
+			<button class="styledButton" id="zoomInButton" onclick="zoomIn()">
+				<div class=iconButton>
+					<%= image_tag('zoom_in.png', :plugin => 'portfolio_timeline') %>
+				</div>
+			</button>
+			<button class="styledButton" id="zoomOutButton" onclick="zoomOut()">
+				<div class=iconButton>
+					<%= image_tag('zoom_out.png', :plugin => 'portfolio_timeline') %>
+				</div>
+			</button>
 		</div>
-	</button>
-	<button class="styledButton" id="zoomOutButton" onclick="zoomOut()">
-		<div class=iconButton>
-			<%= image_tag('zoom_out.png', :plugin => 'portfolio_timeline') %>
-		</div>
-	</button>
-</div>
+		<div id="visualization"></div>
+		<p class="other-formats">
+			Exportar a:  
+			<span onclick="visToCanvas()"><a>PNG</a></span>
+		</p>
+	</div>
+</fieldset>
 
+<fieldset class="collapsible collapsed">
+	<legend onclick="toggleFieldset(this);">Items</legend>
+	<div style="display:none;">
+	<table id="itemsTable">
+		<tr>
+			<th>ID</th>
+			<th>Tipo</th>
+			<th>Sistema</th>
+			<th>Estado</th>
+			<th>Release</th>
+			<th>Sprint</th>
+			<th>Porcentaje completado</th>
+		</tr>
+		<% @issuesDemandas.each do |issue| %>
+			<% if !issue.closed? %>
+				<tr class="white">
+				
+					<td title="<%= issue.subject %>">
+						<span id="ps-<%= issue.id %>-show" style="cursor:pointer;"
+						onclick="showTr('.ps-<%= issue.id %>','#ps-<%= issue.id %>-hide','#ps-<%= issue.id %>-show')">
+							+
+						</span>
+						<span id="ps-<%= issue.id %>-hide"style="cursor:pointer; display:none;"
+						onclick="hideTr('.ps-<%= issue.id %>-hide','#ps-<%= issue.id %>-show','#ps-<%= issue.id %>-hide')">
+							-
+						</span>
+						<%= link_to_issue(issue, :subject => false, :tracker => false) %>
+					</td>
+					
+					<td><%= issue.tracker %></td>
+					<td><%= issue.project %></td>
+					<td><%= issue.status %></td>
+					<td></td>
+					<td></td>
+					<td style="background:linear-gradient(to right, #707070 <%= issue.done_ratio %>%,#ffffff <%= issue.done_ratio %>%);">
+						<%= issue.done_ratio %>%
+					</td>
+				</tr>
+				<% @relatedPss = issue.relations %>
+				<% @relatedPss.each do |relatedPs| %>
+					<% if relatedPs.issue_from.id != issue.id %>
+						<tr class="hidden ps ps-<%= issue.id %> ps-<%= issue.id %>-hide">
+							<td title="<%= relatedPs.issue_from.subject %>">
+								&emsp;&emsp;
+								|
+								<span id="hu-<%= relatedPs.issue_from.id %>-show" style="cursor:pointer;"
+								onclick="showTr('.hu-<%= relatedPs.issue_from.id %>','#hu-<%= relatedPs.issue_from.id %>-hide','#hu-<%= relatedPs.issue_from.id %>-show')">
+									+
+								</span>
+								<span id="hu-<%= relatedPs.issue_from.id %>-hide" style="cursor:pointer; display:none;"
+								onclick="hideTr('.hu-<%= relatedPs.issue_from.id %>-hide','#hu-<%= relatedPs.issue_from.id %>-show','#hu-<%= relatedPs.issue_from.id %>-hide')">
+									-
+								</span>
+								<%= link_to_issue(relatedPs.issue_from, :subject => false, :tracker => false) %>
+							</td>
+							<td><%= relatedPs.issue_from.tracker %></td>
+							<td><%= relatedPs.issue_from.project %></td>
+							<td><%= relatedPs.issue_from.status %></td>
+							<td></td>
+							<td></td>
+							<td style="background:linear-gradient(to right, #707070 <%= relatedPs.issue_from.done_ratio %>%,#ffffff <%= relatedPs.issue_from.done_ratio %>%);">
+								<%= relatedPs.issue_from.done_ratio %>%
+							</td>
+						</tr>
+						<% @relatedHus = relatedPs.issue_from.relations %>
+						<% @relatedHus.each do |relatedHu| %>
+							<% if relatedHu.issue_from.id != relatedPs.issue_from.id %>
+								<tr class="hidden hu hu-<%= relatedPs.issue_from.id %> ps-<%= issue.id %>-hide hu-<%= relatedPs.issue_from.id %>-hide">
+									<td title="<%= relatedHu.issue_from.subject %>">
+										&emsp;&emsp;&emsp;&emsp;
+										|
+										<span id="td-<%= relatedHu.issue_from.id %>-show" style="cursor:pointer;"
+										onclick="showTr('.td-<%= relatedHu.issue_from.id %>','#td-<%= relatedHu.issue_from.id %>-hide','#td-<%= relatedHu.issue_from.id %>-show')">
+											+
+										</span>
+										<span id="td-<%= relatedHu.issue_from.id %>-hide" style="cursor:pointer; display:none;"
+										onclick="hideTr('.td-<%= relatedHu.issue_from.id %>','#td-<%= relatedHu.issue_from.id %>-show','#td-<%= relatedHu.issue_from.id %>-hide')">
+											-
+										</span>
+										<%= link_to_issue(relatedHu.issue_from, :subject => false, :tracker => false) %>
+									</td>
+									<td><%= relatedHu.issue_from.tracker %></td>
+									<td><%= relatedHu.issue_from.project %></td>
+									<td><%= relatedHu.issue_from.status %></td>
+									<td></td>
+									<td></td>
+									<td style="background:linear-gradient(to right, #707070 <%= relatedHu.issue_from.done_ratio %>%,#ffffff <%= relatedHu.issue_from.done_ratio %>%);">
+										<%= relatedHu.issue_from.done_ratio %>%
+									</td>
+								</tr>
+								<% if relatedHu.issue_from.children? %>
+								<% @relatedTds = relatedHu.issue_from.children %>
+									<% @relatedTds.each do |relatedTd| %>
+											<tr class="hidden td td-<%= relatedHu.issue_from.id %> ps-<%= issue.id %>-hide hu-<%= relatedPs.issue_from.id %>-hide">
+												<td title="<%= relatedTd.subject %>">
+													&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+													|
+													<%= link_to_issue(relatedTd, :subject => false, :tracker => false) %>
+												</td>
+												<td><%= relatedTd.tracker %></td>
+												<td><%= relatedTd.project %></td>
+												<td><%= relatedTd.status %></td>
+												<td></td>
+												<td></td>
+												<td style="background:linear-gradient(to right, #707070 <%= relatedTd.done_ratio %>%,#ffffff <%= relatedTd.done_ratio %>%);">
+													<%= relatedTd.done_ratio %>%
+												</td>
+											</tr>
+									<% end %>
+								<% end %>
+							<% end %>
+						<% end %>	
+					<% end %>
+				<% end %>
+			<% end %>
+		<% end %>
+		
+	</table>
+	</div>
+</fieldset>
 
-<div id="visualization"></div>
-<p class="other-formats">
-	Exportar a:  
-	<span onclick="visToCanvas()"><a>PNG</a></span>
-</p>
 <script type="text/javascript">
 	var statusPerTrackerArray = <%= raw @statusPerTrackerArray %>;
 	var container = document.getElementById('visualization');
@@ -112,9 +237,9 @@
 					visible: true,
 					link: '<%= link_to_issue(issue, :subject => false, :tracker => false) %>',
 					assigned_to_id: '<%= issue.assigned_to_id %>',
-					customField1: `<%= @customField1 %>`,
-					customField2: `<%= @customField2 %>`,
-					customField3: `<%= @customField3 %>`,
+					customField1: '<%= @customField1.squish %>',
+					customField2: '<%= @customField2.squish %>',
+					customField3: '<%= @customField3.squish %>',
 					trackerId: '<%= issue.tracker_id%>'
 					});
 			<% if @start!="" and @end!="" %>

@@ -55,9 +55,10 @@ function zoomOut(){
 	timeline.zoomOut(0.85);
 }
 function visToCanvas(){
-	html2canvas(document.getElementById("visualization")).then(function(canvas){
+	html2canvas(document.getElementById("visualization")).then((canvas) => {
 																	var img = canvas.toDataURL("image/png");
-																	window.open(img);
+																	var newWindow = window.open();
+																	newWindow.document.write('<img src="' + img + '" />');
 																	});
 }
 
@@ -192,6 +193,18 @@ function thereIsSomethingVisible(groupContent){
 		}
 	}
 	return flag;
+}
+
+//Table functions
+function showTr(id,buttonOn, buttonOff){
+	$(id).css('display','table-row');
+	$(buttonOn).css('display','inline');
+	$(buttonOff).css('display','none');
+}
+function hideTr(id,buttonOn, buttonOff){
+	$(id).css('display','none');
+	$(buttonOn).css('display','inline');
+	$(buttonOff).css('display','none');
 }
 
 //IExplorer support
