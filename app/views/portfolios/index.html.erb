@@ -130,7 +130,7 @@
 				</tr>
 				<% @relatedPss = issue.relations %>
 				<% @relatedPss.each do |relatedPs| %>
-					<% if relatedPs.issue_from.id != issue.id %>
+					<% if relatedPs.issue_from.id != issue.id and relatedPs.relation_type == 'blocks' %>
 						<tr class="hidden child ps-<%= issue.id %> ps-<%= issue.id %>-hide">
 							<td class="idCol" title="<%= relatedPs.issue_from.subject %>">
 								&emsp;&emsp;
@@ -153,7 +153,7 @@
 						</tr>
 						<% @relatedHus = relatedPs.issue_from.relations %>
 						<% @relatedHus.each do |relatedHu| %>
-							<% if relatedHu.issue_from.id != relatedPs.issue_from.id %>
+							<% if relatedHu.issue_from.id != relatedPs.issue_from.id and relatedPs.relation_type == 'blocks' %>
 								<tr class="hidden child hu-<%= relatedPs.issue_from.id %> ps-<%= issue.id %>-hide hu-<%= relatedPs.issue_from.id %>-hide">
 									<td class="idCol" title="<%= relatedHu.issue_from.subject %>">
 										&emsp;&emsp;&emsp;&emsp;

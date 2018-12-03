@@ -4,7 +4,8 @@ class PortfoliosController < ApplicationController
 	@project = Project.find_by identifier: @identifier
 	@issues = Issue.where(['project_id = ?', @project.id])
 	
-	@demandasId = (Tracker.find_by name: 'Demanda de nuevo desarrollo').id
+	@demandasString = Setting.plugin_portfolio_timeline['itemsTopTracker']
+	@demandasId = (Tracker.find_by name: @demandasString).id
 	@issuesDemandas = Issue.where('project_id = ? and tracker_id=?', @project.id,@demandasId)
 	
 	@startString = Setting.plugin_portfolio_timeline['start_date']

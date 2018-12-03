@@ -5,8 +5,10 @@
 <% @currentCustomField1 = Setting.plugin_portfolio_timeline['customField1'] %>
 <% @currentCustomField2 = Setting.plugin_portfolio_timeline['customField2'] %>
 <% @currentCustomField3 = Setting.plugin_portfolio_timeline['customField3'] %>
+<% @currentItemsTopTracker = Setting.plugin_portfolio_timeline['itemsTopTracker'] %>
+<% @trackers = Tracker.all %>
 <fieldset>
-<legend>Campos personalizados para muestra de datos en la línea de tiempo:</legend>
+<legend>Campos personalizados para muestra de datos en la línea de tiempo</legend>
 	<table>
 		<tbody>
 			<tr>
@@ -58,7 +60,7 @@
 	</table>
 </fieldset>
 <fieldset>
-<legend>Campos personalizados para columna personalizable:</legend>
+<legend>Campos personalizados para columna personalizable</legend>
 	<table>
 		<tbody>
 			<tr>
@@ -104,6 +106,29 @@
 									<% end %>
 									value="<%= cfName.name %>">
 									<%= cfName.name %>
+							</option>
+						<% end %>
+					</select>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</fieldset>
+<fieldset>
+<legend>Opciones para tabla items</legend>
+	<table>
+		<tbody>
+			<tr>
+				<th>Tracker para nivel más alto de la jerarquía</th>
+				<td>
+					<select id="itemsTopTracker" name="settings[itemsTopTracker]">
+						<option selected value="Sin configurar">Sin configurar</option>
+						<% @trackers.each do |tracker| %>
+							<option <% if(tracker.name==@currentItemsTopTracker) %>
+										<%= 'selected' %>
+									<% end %>
+									value="<%= tracker.name %>">
+									<%= tracker.name %>
 							</option>
 						<% end %>
 					</select>
