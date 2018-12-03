@@ -54,12 +54,12 @@ function zoomIn(){
 function zoomOut(){
 	timeline.zoomOut(0.85);
 }
-function visToCanvas(){
-	html2canvas(document.getElementById("visualization")).then((canvas) => {
-																	var img = canvas.toDataURL("image/png");
-																	var newWindow = window.open();
-																	newWindow.document.write('<img src="' + img + '" />');
-																	});
+function visToCanvas(divName){
+	html2canvas(document.getElementById(divName)).then((canvas) => {
+										var img = canvas.toDataURL("image/png");
+										var newWindow = window.open();
+										newWindow.document.write('<img src="' + img + '" />');
+										});
 }
 
 function setCustomColumn(){
@@ -88,8 +88,10 @@ function setCustomColumn(){
 			$('.customField2').css('display','none');
 			$('.customField3').css('display','block');
 			$('.customColumnHeader').css('display','block');
+			
 			break;
 	}
+	$('.customColumnHeader').text($("#customFieldSelector option:selected").text());
 	sortBy(field);
 }
 

@@ -139,7 +139,7 @@
     position: absolute;
     left: 0px;
     top: 0px;
-    background: #707070;
+    background: #909090;
   }
   .progress-label
   {
@@ -236,15 +236,11 @@
   {
 	display: none;
   }
-  #itemsTable tr.ps
-  {
-	background-color: #f9f9f9;
-  }
-  #itemsTable tr.hu
-  {
-	background-color: #f4f4f4;
-  }
-  #itemsTable tr.td
+  #itemsTable tr.child
   {
 	background-color: #efefef;
+  }
+  .idCol
+  {
+	width:300px;
   }

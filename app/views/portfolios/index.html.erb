@@ -1,4 +1,4 @@
-<h2>Portfolio-Timeline</h2>
+<h2>Portfolio</h2>
 <% content_for :header_tags do %>
 	
 	<%= javascript_include_tag 'moment-with-locales', :plugin => 'portfolio_timeline' %>
@@ -88,7 +88,7 @@
 		<div id="visualization"></div>
 		<p class="other-formats">
 			Exportar a:  
-			<span onclick="visToCanvas()"><a>PNG</a></span>
+			<span onclick="visToCanvas('visualization')"><a>PNG</a></span>
 		</p>
 	</div>
 </fieldset>
@@ -96,21 +96,20 @@
 <fieldset class="collapsible collapsed">
 	<legend onclick="toggleFieldset(this);">Items</legend>
 	<div style="display:none;">
+	<div id = "tableVisualization">
 	<table id="itemsTable">
 		<tr>
-			<th>ID</th>
+			<th class="idCol">ID</th>
 			<th>Tipo</th>
 			<th>Sistema</th>
 			<th>Estado</th>
-			<th>Release</th>
-			<th>Sprint</th>
 			<th>Porcentaje completado</th>
 		</tr>
 		<% @issuesDemandas.each do |issue| %>
 			<% if !issue.closed? %>
 				<tr class="white">
 				
-					<td title="<%= issue.subject %>">
+					<td class="idCol" title="<%= issue.subject %>">
 						<span id="ps-<%= issue.id %>-show" style="cursor:pointer;"
 						onclick="showTr('.ps-<%= issue.id %>','#ps-<%= issue.id %>-hide','#ps-<%= issue.id %>-show')">
 							+
@@ -125,19 +124,16 @@
 					<td><%= issue.tracker %></td>
 					<td><%= issue.project %></td>
 					<td><%= issue.status %></td>
-					<td></td>
-					<td></td>
-					<td style="background:linear-gradient(to right, #707070 <%= issue.done_ratio %>%,#ffffff <%= issue.done_ratio %>%);">
+					<td style="background:linear-gradient(to right, #909090 <%= issue.done_ratio %>%,#ffffff <%= issue.done_ratio %>%);">
 						<%= issue.done_ratio %>%
 					</td>
 				</tr>
 				<% @relatedPss = issue.relations %>
 				<% @relatedPss.each do |relatedPs| %>
 					<% if relatedPs.issue_from.id != issue.id %>
-						<tr class="hidden ps ps-<%= issue.id %> ps-<%= issue.id %>-hide">
-							<td title="<%= relatedPs.issue_from.subject %>">
+						<tr class="hidden child ps-<%= issue.id %> ps-<%= issue.id %>-hide">
+							<td class="idCol" title="<%= relatedPs.issue_from.subject %>">
 								&emsp;&emsp;
-								|
 								<span id="hu-<%= relatedPs.issue_from.id %>-show" style="cursor:pointer;"
 								onclick="showTr('.hu-<%= relatedPs.issue_from.id %>','#hu-<%= relatedPs.issue_from.id %>-hide','#hu-<%= relatedPs.issue_from.id %>-show')">
 									+
@@ -151,19 +147,16 @@
 							<td><%= relatedPs.issue_from.tracker %></td>
 							<td><%= relatedPs.issue_from.project %></td>
 							<td><%= relatedPs.issue_from.status %></td>
-							<td></td>
-							<td></td>
-							<td style="background:linear-gradient(to right, #707070 <%= relatedPs.issue_from.done_ratio %>%,#ffffff <%= relatedPs.issue_from.done_ratio %>%);">
+							<td style="background:linear-gradient(to right, #909090 <%= relatedPs.issue_from.done_ratio %>%,#ffffff <%= relatedPs.issue_from.done_ratio %>%);">
 								<%= relatedPs.issue_from.done_ratio %>%
 							</td>
 						</tr>
 						<% @relatedHus = relatedPs.issue_from.relations %>
 						<% @relatedHus.each do |relatedHu| %>
 							<% if relatedHu.issue_from.id != relatedPs.issue_from.id %>
-								<tr class="hidden hu hu-<%= relatedPs.issue_from.id %> ps-<%= issue.id %>-hide hu-<%= relatedPs.issue_from.id %>-hide">
-									<td title="<%= relatedHu.issue_from.subject %>">
+								<tr class="hidden child hu-<%= relatedPs.issue_from.id %> ps-<%= issue.id %>-hide hu-<%= relatedPs.issue_from.id %>-hide">
+									<td class="idCol" title="<%= relatedHu.issue_from.subject %>">
 										&emsp;&emsp;&emsp;&emsp;
-										|
 										<span id="td-<%= relatedHu.issue_from.id %>-show" style="cursor:pointer;"
 										onclick="showTr('.td-<%= relatedHu.issue_from.id %>','#td-<%= relatedHu.issue_from.id %>-hide','#td-<%= relatedHu.issue_from.id %>-show')">
 											+
@@ -177,27 +170,22 @@
 									<td><%= relatedHu.issue_from.tracker %></td>
 									<td><%= relatedHu.issue_from.project %></td>
 									<td><%= relatedHu.issue_from.status %></td>
-									<td></td>
-									<td></td>
-									<td style="background:linear-gradient(to right, #707070 <%= relatedHu.issue_from.done_ratio %>%,#ffffff <%= relatedHu.issue_from.done_ratio %>%);">
+									<td style="background:linear-gradient(to right, #909090 <%= relatedHu.issue_from.done_ratio %>%,#ffffff <%= relatedHu.issue_from.done_ratio %>%);">
 										<%= relatedHu.issue_from.done_ratio %>%
 									</td>
 								</tr>
 								<% if relatedHu.issue_from.children? %>
 								<% @relatedTds = relatedHu.issue_from.children %>
 									<% @relatedTds.each do |relatedTd| %>
-											<tr class="hidden td td-<%= relatedHu.issue_from.id %> ps-<%= issue.id %>-hide hu-<%= relatedPs.issue_from.id %>-hide">
-												<td title="<%= relatedTd.subject %>">
+											<tr class="hidden child td-<%= relatedHu.issue_from.id %> ps-<%= issue.id %>-hide hu-<%= relatedPs.issue_from.id %>-hide">
+												<td class="idCol" title="<%= relatedTd.subject %>">
 													&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-													|
 													<%= link_to_issue(relatedTd, :subject => false, :tracker => false) %>
 												</td>
 												<td><%= relatedTd.tracker %></td>
 												<td><%= relatedTd.project %></td>
 												<td><%= relatedTd.status %></td>
-												<td></td>
-												<td></td>
-												<td style="background:linear-gradient(to right, #707070 <%= relatedTd.done_ratio %>%,#ffffff <%= relatedTd.done_ratio %>%);">
+												<td style="background:linear-gradient(to right, #909090 <%= relatedTd.done_ratio %>%,#ffffff <%= relatedTd.done_ratio %>%);">
 													<%= relatedTd.done_ratio %>%
 												</td>
 											</tr>
@@ -212,6 +200,12 @@
 		
 	</table>
 	</div>
+	<p class="other-formats">
+			Exportar a:  
+			<span onclick="visToCanvas('tableVisualization')"><a>PNG</a></span>
+	</p>
+	</div>
+	
 </fieldset>
 
 <script type="text/javascript">

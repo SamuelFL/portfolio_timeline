@@ -26,7 +26,7 @@ class PortfoliosController < ApplicationController
 	
 	@attendants = User.where(['type = ?','User'])
 	
-	@trackers = Tracker.all
+	@trackers = Tracker.joins("INNER JOIN projects_trackers ON projects_trackers.tracker_id = trackers.id and projects_trackers.project_id =", @project.id.to_s)
 	@statuses = IssueStatus.where(['is_closed = ?', false])
 	@nonClosedStatuses = Array.new
 	

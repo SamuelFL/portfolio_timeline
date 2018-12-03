@@ -2,7 +2,7 @@
 
 Developed by SamuelFL at Inerza S.A. (http://inerza.com/)
 = Description
-V 2.0.0
+V 2.0.1
 
 Remine plugin for portfolio management.
 
