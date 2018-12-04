@@ -100,7 +100,7 @@
 	<table id="itemsTable">
 		<tr>
 			<th class="idCol">ID</th>
-			<th>Tipo</th>
+			<th>Descripción</th>
 			<th>Sistema</th>
 			<th>Estado</th>
 			<th>Sprint</th>
@@ -110,19 +110,19 @@
 			<% if !issue.closed? %>
 				<tr class="white">
 				
-					<td class="idCol" title="<%= issue.subject %>">
+					<td class="idCol" title="<%= issue.tracker %>">
 						<span id="ps-<%= issue.id %>-show" style="cursor:pointer;"
 						onclick="showTr('.ps-<%= issue.id %>','#ps-<%= issue.id %>-hide','#ps-<%= issue.id %>-show')">
-							+
+							>
 						</span>
 						<span id="ps-<%= issue.id %>-hide"style="cursor:pointer; display:none;"
 						onclick="hideTr('.ps-<%= issue.id %>-hide','#ps-<%= issue.id %>-show','#ps-<%= issue.id %>-hide')">
-							-
+							v
 						</span>
 						<%= link_to_issue(issue, :subject => false, :tracker => false) %>
 					</td>
 					
-					<td><%= issue.tracker %></td>
+					<td><%= issue.subject %></td>
 					<td><%= issue.project %></td>
 					<td><%= issue.status %></td>
 					<td></td>
@@ -134,19 +134,19 @@
 				<% @relatedPss.each do |relatedPs| %>
 					<% if relatedPs.issue_from.id != issue.id and relatedPs.relation_type == 'blocks' %>
 						<tr class="hidden child ps-<%= issue.id %> ps-<%= issue.id %>-hide">
-							<td class="idCol" title="<%= relatedPs.issue_from.subject %>">
+							<td class="idCol" title="<%= relatedPs.issue_from.tracker %>">
 								&emsp;&emsp;
 								<span id="hu-<%= relatedPs.issue_from.id %>-show" style="cursor:pointer;"
 								onclick="showTr('.hu-<%= relatedPs.issue_from.id %>','#hu-<%= relatedPs.issue_from.id %>-hide','#hu-<%= relatedPs.issue_from.id %>-show')">
-									+
+									>
 								</span>
 								<span id="hu-<%= relatedPs.issue_from.id %>-hide" style="cursor:pointer; display:none;"
 								onclick="hideTr('.hu-<%= relatedPs.issue_from.id %>-hide','#hu-<%= relatedPs.issue_from.id %>-show','#hu-<%= relatedPs.issue_from.id %>-hide')">
-									-
+									v
 								</span>
 								<%= link_to_issue(relatedPs.issue_from, :subject => false, :tracker => false) %>
 							</td>
-							<td><%= relatedPs.issue_from.tracker %></td>
+							<td><%= relatedPs.issue_from.subject %></td>
 							<td><%= relatedPs.issue_from.project %></td>
 							<td><%= relatedPs.issue_from.status %></td>
 							<td></td>
@@ -158,19 +158,19 @@
 						<% @relatedHus.each do |relatedHu| %>
 							<% if relatedHu.issue_from.id != relatedPs.issue_from.id and relatedPs.relation_type == 'blocks' %>
 								<tr class="hidden child hu-<%= relatedPs.issue_from.id %> ps-<%= issue.id %>-hide hu-<%= relatedPs.issue_from.id %>-hide">
-									<td class="idCol" title="<%= relatedHu.issue_from.subject %>">
+									<td class="idCol" title="<%= relatedHu.issue_from.tracker %>">
 										&emsp;&emsp;&emsp;&emsp;
 										<span id="td-<%= relatedHu.issue_from.id %>-show" style="cursor:pointer;"
 										onclick="showTr('.td-<%= relatedHu.issue_from.id %>','#td-<%= relatedHu.issue_from.id %>-hide','#td-<%= relatedHu.issue_from.id %>-show')">
-											+
+											>
 										</span>
 										<span id="td-<%= relatedHu.issue_from.id %>-hide" style="cursor:pointer; display:none;"
 										onclick="hideTr('.td-<%= relatedHu.issue_from.id %>','#td-<%= relatedHu.issue_from.id %>-show','#td-<%= relatedHu.issue_from.id %>-hide')">
-											-
+											v
 										</span>
 										<%= link_to_issue(relatedHu.issue_from, :subject => false, :tracker => false) %>
 									</td>
-									<td><%= relatedHu.issue_from.tracker %></td>
+									<td><%= relatedHu.issue_from.subject %></td>
 									<td><%= relatedHu.issue_from.project %></td>
 									<td><%= relatedHu.issue_from.status %></td>
 									<td><%= relatedHu.issue_from.fixed_version %></td>
@@ -182,11 +182,11 @@
 								<% @relatedTds = relatedHu.issue_from.children %>
 									<% @relatedTds.each do |relatedTd| %>
 											<tr class="hidden child td-<%= relatedHu.issue_from.id %> ps-<%= issue.id %>-hide hu-<%= relatedPs.issue_from.id %>-hide">
-												<td class="idCol" title="<%= relatedTd.subject %>">
+												<td class="idCol" title="<%= relatedTd.tracker %>">
 													&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
 													<%= link_to_issue(relatedTd, :subject => false, :tracker => false) %>
 												</td>
-												<td><%= relatedTd.tracker %></td>
+												<td><%= relatedTd.subject %></td>
 												<td><%= relatedTd.project %></td>
 												<td><%= relatedTd.status %></td>
 												<td></td>
