@@ -76,12 +76,12 @@
 		<div id="zoomSection">
 			<button class="styledButton" id="zoomInButton" onclick="zoomIn()">
 				<div class=iconButton>
-					<%= image_tag('zoom_in.png', :plugin => 'portfolio_timeline') %>
+					<%= image_tag('zoom_in.png') %>
 				</div>
 			</button>
 			<button class="styledButton" id="zoomOutButton" onclick="zoomOut()">
 				<div class=iconButton>
-					<%= image_tag('zoom_out.png', :plugin => 'portfolio_timeline') %>
+					<%= image_tag('zoom_out.png') %>
 				</div>
 			</button>
 		</div>
@@ -100,7 +100,7 @@
 	<table id="itemsTable">
 		<tr>
 			<th class="idCol">ID</th>
-			<th>Descripción</th>
+			<th style="text-align:left;">Descripción</th>
 			<th>Sistema</th>
 			<th>Estado</th>
 			<th>Sprint</th>
@@ -113,16 +113,16 @@
 					<td class="idCol" title="<%= issue.tracker %>">
 						<span id="ps-<%= issue.id %>-show" style="cursor:pointer;"
 						onclick="showTr('.ps-<%= issue.id %>','#ps-<%= issue.id %>-hide','#ps-<%= issue.id %>-show')">
-							>
+							<%= image_tag('arrow_collapsed.png') %>
 						</span>
 						<span id="ps-<%= issue.id %>-hide"style="cursor:pointer; display:none;"
 						onclick="hideTr('.ps-<%= issue.id %>-hide','#ps-<%= issue.id %>-show','#ps-<%= issue.id %>-hide')">
-							v
+							<%= image_tag('arrow_expanded.png') %>
 						</span>
 						<%= link_to_issue(issue, :subject => false, :tracker => false) %>
 					</td>
 					
-					<td><%= issue.subject %></td>
+					<td style="text-align:left;"><%= issue.subject %></td>
 					<td><%= issue.project %></td>
 					<td><%= issue.status %></td>
 					<td></td>
@@ -138,15 +138,15 @@
 								&emsp;&emsp;
 								<span id="hu-<%= relatedPs.issue_from.id %>-show" style="cursor:pointer;"
 								onclick="showTr('.hu-<%= relatedPs.issue_from.id %>','#hu-<%= relatedPs.issue_from.id %>-hide','#hu-<%= relatedPs.issue_from.id %>-show')">
-									>
+									<%= image_tag('arrow_collapsed.png') %>
 								</span>
 								<span id="hu-<%= relatedPs.issue_from.id %>-hide" style="cursor:pointer; display:none;"
 								onclick="hideTr('.hu-<%= relatedPs.issue_from.id %>-hide','#hu-<%= relatedPs.issue_from.id %>-show','#hu-<%= relatedPs.issue_from.id %>-hide')">
-									v
+									<%= image_tag('arrow_expanded.png') %>
 								</span>
 								<%= link_to_issue(relatedPs.issue_from, :subject => false, :tracker => false) %>
 							</td>
-							<td><%= relatedPs.issue_from.subject %></td>
+							<td style="text-align:left;"><%= relatedPs.issue_from.subject %></td>
 							<td><%= relatedPs.issue_from.project %></td>
 							<td><%= relatedPs.issue_from.status %></td>
 							<td></td>
@@ -162,15 +162,15 @@
 										&emsp;&emsp;&emsp;&emsp;
 										<span id="td-<%= relatedHu.issue_from.id %>-show" style="cursor:pointer;"
 										onclick="showTr('.td-<%= relatedHu.issue_from.id %>','#td-<%= relatedHu.issue_from.id %>-hide','#td-<%= relatedHu.issue_from.id %>-show')">
-											>
+											<%= image_tag('arrow_collapsed.png') %>
 										</span>
 										<span id="td-<%= relatedHu.issue_from.id %>-hide" style="cursor:pointer; display:none;"
 										onclick="hideTr('.td-<%= relatedHu.issue_from.id %>','#td-<%= relatedHu.issue_from.id %>-show','#td-<%= relatedHu.issue_from.id %>-hide')">
-											v
+											<%= image_tag('arrow_expanded.png') %>
 										</span>
 										<%= link_to_issue(relatedHu.issue_from, :subject => false, :tracker => false) %>
 									</td>
-									<td><%= relatedHu.issue_from.subject %></td>
+									<td style="text-align:left;"><%= relatedHu.issue_from.subject %></td>
 									<td><%= relatedHu.issue_from.project %></td>
 									<td><%= relatedHu.issue_from.status %></td>
 									<td><%= relatedHu.issue_from.fixed_version %></td>
@@ -186,7 +186,7 @@
 													&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
 													<%= link_to_issue(relatedTd, :subject => false, :tracker => false) %>
 												</td>
-												<td><%= relatedTd.subject %></td>
+												<td style="text-align:left;"><%= relatedTd.subject %></td>
 												<td><%= relatedTd.project %></td>
 												<td><%= relatedTd.status %></td>
 												<td></td>
