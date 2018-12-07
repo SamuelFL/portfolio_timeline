@@ -103,6 +103,7 @@
 			<th style="text-align:left;">Descripción</th>
 			<th>Sistema</th>
 			<th>Estado</th>
+			<th>Release</th>
 			<th>Sprint</th>
 			<th>Porcentaje completado</th>
 		</tr>
@@ -125,6 +126,7 @@
 					<td style="text-align:left;"><%= issue.subject %></td>
 					<td><%= issue.project %></td>
 					<td><%= issue.status %></td>
+					<td></td>
 					<td></td>
 					<td style="background:linear-gradient(to right, #7ed384 <%= issue.done_ratio %>%,#ffffff <%= issue.done_ratio %>%);">
 						<%= issue.done_ratio %>%
@@ -150,6 +152,7 @@
 							<td><%= relatedPs.issue_from.project %></td>
 							<td><%= relatedPs.issue_from.status %></td>
 							<td></td>
+							<td></td>
 							<td style="background:linear-gradient(to right, #7ed384 <%= relatedPs.issue_from.done_ratio %>%,#ffffff <%= relatedPs.issue_from.done_ratio %>%);">
 								<%= relatedPs.issue_from.done_ratio %>%
 							</td>
@@ -173,6 +176,7 @@
 									<td style="text-align:left;"><%= relatedHu.issue_from.subject %></td>
 									<td><%= relatedHu.issue_from.project %></td>
 									<td><%= relatedHu.issue_from.status %></td>
+									<td><%= relatedHu.issue_from.release %></td>
 									<td><%= relatedHu.issue_from.fixed_version %></td>
 									<td style="background:linear-gradient(to right, #7ed384 <%= relatedHu.issue_from.done_ratio %>%,#ffffff <%= relatedHu.issue_from.done_ratio %>%);">
 										<%= relatedHu.issue_from.done_ratio %>%
@@ -189,6 +193,7 @@
 												<td style="text-align:left;"><%= relatedTd.subject %></td>
 												<td><%= relatedTd.project %></td>
 												<td><%= relatedTd.status %></td>
+												<td></td>
 												<td></td>
 												<td style="background:linear-gradient(to right, #7ed384 <%= relatedTd.done_ratio %>%,#ffffff <%= relatedTd.done_ratio %>%);">
 													<%= relatedTd.done_ratio %>%

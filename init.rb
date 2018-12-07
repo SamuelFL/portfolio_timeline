@@ -2,7 +2,7 @@ Redmine::Plugin.register :portfolio_timeline do
   name 'Portfolio Timeline plugin'
   author 'SamuelFL (http://inerza.com/)'
   description 'Redmine plugin for portfolio management'
-  version '2.1.2'
+  version '2.1.3'
   project_module :portfolio do
     permission :view_portfolios, :portfolios => :index
   end
